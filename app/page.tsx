@@ -15,7 +15,7 @@ export default function HomePage() {
       <section className="relative flex min-h-[82vh] items-center">
         <div className="relative mx-auto w-full max-w-6xl px-5 py-24">
           <div className="max-w-2xl">
-            <span className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/40 px-4 py-1.5 text-xs tracking-widest text-primary uppercase backdrop-blur-sm">
+            <span className="eyebrow inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/40 px-4 py-1.5 backdrop-blur-sm">
               <Leaf className="size-3.5" aria-hidden="true" />
               Experience nature, experience vitality
             </span>
@@ -78,8 +78,10 @@ export default function HomePage() {
               <span className="flex size-12 items-center justify-center rounded-full bg-secondary/25 text-primary">
                 <item.icon className="size-5" aria-hidden="true" />
               </span>
-              <h2 className="mt-5 font-serif text-xl">{item.title}</h2>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+              <h2 className="section-heading mt-5 text-lg md:text-xl">
+                {item.title}
+              </h2>
+              <p className="mt-3 leading-relaxed text-muted-foreground/85">
                 {item.body}
               </p>
             </div>
@@ -92,13 +94,9 @@ export default function HomePage() {
         <div className="mx-auto max-w-6xl px-5 py-20">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div className="max-w-xl">
-              <p className="font-serif text-sm italic text-primary">
-                Freshly picked
-              </p>
-              <h2 className="mt-1 font-serif text-3xl md:text-4xl">
-                From the garden
-              </h2>
-              <p className="mt-3 text-muted-foreground">
+              <p className="eyebrow">Freshly picked</p>
+              <h2 className="section-heading mt-2">From the garden</h2>
+              <p className="mt-3 text-muted-foreground/85">
                 Foods so well made by nature they are more than a supplement.
                 Reveal a link whenever you&apos;re ready to explore.
               </p>
@@ -125,10 +123,10 @@ export default function HomePage() {
 
       {/* CTA */}
       <section className="mx-auto max-w-6xl px-5 py-24 text-center">
-        <h2 className="mx-auto max-w-2xl font-serif text-3xl leading-tight text-balance md:text-4xl">
+        <h2 className="mx-auto max-w-2xl font-serif text-4xl font-light leading-tight text-balance md:text-5xl">
           Experience is the best teacher
         </h2>
-        <p className="mx-auto mt-4 max-w-xl text-muted-foreground text-pretty">
+        <p className="mx-auto mt-4 max-w-xl text-muted-foreground/85 text-pretty">
           What are you willing to learn? Wander the full collection and feel the
           true sensations that Nature has to offer.
         </p>

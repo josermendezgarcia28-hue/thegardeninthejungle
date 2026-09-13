@@ -18,8 +18,8 @@ export function SiteFooter() {
           </p>
         </div>
 
-        <nav className="flex flex-col gap-3 text-sm" aria-label="Footer">
-          <span className="font-medium text-foreground">Explore</span>
+        <nav className="flex flex-col gap-3.5" aria-label="Footer">
+          <span className="eyebrow text-foreground/80">Explore</span>
           <Link
             href="/"
             className="text-muted-foreground transition-colors hover:text-primary"
