@@ -17,7 +17,7 @@ export function AnimatedTitle({ text, className }: AnimatedTitleProps) {
           className="jungle-title-word"
           style={{ '--enter-delay': `${index * 0.13}s` } as React.CSSProperties}
         >
-          {word}
+          <span className="jungle-title-word-inner">{word}</span>
         </span>
       ))}
     </h1>

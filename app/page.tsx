@@ -7,6 +7,21 @@ import { ProductCard } from '@/components/product-card'
 import { products } from '@/lib/products'
 import { cn } from '@/lib/utils'
 
+const pollen = [
+  { left: '6%', size: '7px', duration: '17s', delay: '0s' },
+  { left: '14%', size: '4px', duration: '22s', delay: '3s' },
+  { left: '22%', size: '9px', duration: '19s', delay: '6s' },
+  { left: '31%', size: '5px', duration: '24s', delay: '1s' },
+  { left: '39%', size: '6px', duration: '20s', delay: '8s' },
+  { left: '48%', size: '3px', duration: '26s', delay: '4s' },
+  { left: '55%', size: '8px', duration: '18s', delay: '10s' },
+  { left: '63%', size: '5px', duration: '23s', delay: '2s' },
+  { left: '71%', size: '6px', duration: '21s', delay: '7s' },
+  { left: '79%', size: '4px', duration: '25s', delay: '5s' },
+  { left: '86%', size: '9px', duration: '19s', delay: '11s' },
+  { left: '93%', size: '5px', duration: '22s', delay: '9s' },
+]
+
 export default function HomePage() {
   const featured = products.slice(0, 3)
 
@@ -20,10 +35,26 @@ export default function HomePage() {
           fill
           priority
           sizes="100vw"
-          className="object-cover"
+          className="ken-burns object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background/75 via-background/45 to-background" />
         <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/55 to-transparent" />
+
+        {/* Atmospheric drifting pollen / spores */}
+        <div className="pollen-layer" aria-hidden="true">
+          {pollen.map((p, i) => (
+            <span
+              key={i}
+              className="pollen"
+              style={{
+                left: p.left,
+                width: p.size,
+                animationDuration: p.duration,
+                animationDelay: p.delay,
+              }}
+            />
+          ))}
+        </div>
 
         <div className="relative mx-auto w-full max-w-6xl px-5 py-24">
           <div className="max-w-2xl">
