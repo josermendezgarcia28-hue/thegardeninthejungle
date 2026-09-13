@@ -1,14 +1,15 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Fraunces, Inter, Uncial_Antiqua } from 'next/font/google'
+import { Fraunces, Lora, Uncial_Antiqua } from 'next/font/google'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { SiteBackground } from '@/components/site-background'
 import './globals.css'
 
-const inter = Inter({
+const lora = Lora({
   subsets: ['latin'],
-  variable: '--font-inter',
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-lora',
   display: 'swap',
 })
 
@@ -45,7 +46,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${fraunces.variable} ${uncialAntiqua.variable} bg-background`}
+      className={`${lora.variable} ${fraunces.variable} ${uncialAntiqua.variable} bg-background`}
     >
       <body className="antialiased font-sans flex min-h-dvh flex-col bg-transparent">
         <SiteBackground />
