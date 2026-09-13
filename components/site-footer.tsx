@@ -3,7 +3,7 @@ import { Leaf } from 'lucide-react'
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-border/60 bg-card/40">
+    <footer className="border-t border-primary/15 bg-secondary/25 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl flex-col gap-8 px-5 py-12 md:flex-row md:items-start md:justify-between">
         <div className="max-w-sm">
           <div className="flex items-center gap-2 font-serif text-lg">

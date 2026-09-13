@@ -11,7 +11,7 @@ export function ProductCard({ product }: { product: Product }) {
   const [revealed, setRevealed] = useState(false)
 
   return (
-    <article className="group flex flex-col overflow-hidden rounded-2xl border border-border/60 bg-card transition-colors hover:border-primary/40">
+    <article className="group flex flex-col overflow-hidden rounded-2xl border border-primary/20 bg-secondary/35 shadow-2xl backdrop-blur-md transition-colors hover:border-primary/40">
       <div className="relative aspect-square overflow-hidden">
         <Image
           src={product.image || '/placeholder.svg'}

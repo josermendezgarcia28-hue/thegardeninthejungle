@@ -17,7 +17,7 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false)
 
   return (
-    <header className="tribal-weave sticky top-0 z-50 bg-background/92 backdrop-blur-md">
+    <header className="tribal-weave sticky top-0 z-50 border-b border-primary/15 bg-background/75 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
         <Link
           href="/"

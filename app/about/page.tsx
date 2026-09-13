@@ -57,7 +57,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="border-y border-border/60 bg-card/30">
+      <section className="border-y border-primary/15 bg-secondary/20 backdrop-blur-md">
         <div className="mx-auto max-w-6xl px-5 py-16">
           <h2 className="font-serif text-2xl md:text-3xl">
             What this garden grows on

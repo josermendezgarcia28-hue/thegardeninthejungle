@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function ProductsPage() {
   return (
     <main>
-      <section className="border-b border-border/60 bg-card/30">
+      <section className="border-b border-primary/15 bg-secondary/20 backdrop-blur-md">
         <div className="mx-auto max-w-6xl px-5 py-16 md:py-20">
           <p className="font-serif text-sm italic text-primary">
             The most exotic substances on the planet
