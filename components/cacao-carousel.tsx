@@ -14,10 +14,14 @@ export function CacaoCarousel({
   slides,
   className,
   autoPlayMs = 5000,
+  badgeLabel = 'Tree to Cup',
+  ariaLabel = 'Product gallery',
 }: {
   slides: CarouselSlide[]
   className?: string
   autoPlayMs?: number
+  badgeLabel?: string
+  ariaLabel?: string
 }) {
   const [index, setIndex] = useState(0)
   const [paused, setPaused] = useState(false)
@@ -53,7 +57,7 @@ export function CacaoCarousel({
       onBlurCapture={() => setPaused(false)}
       role="group"
       aria-roledescription="carousel"
-      aria-label="Ceremonial cacao, from tree to cup"
+      aria-label={ariaLabel}
     >
       {slides.map((slide, i) => (
         <div
@@ -78,9 +82,9 @@ export function CacaoCarousel({
       {/* Legibility gradient for the caption */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-background/95 via-background/50 to-transparent" />
 
-      {/* Tree to Cup step badge */}
+      {/* Step badge */}
       <span className="eyebrow absolute left-3 bottom-3 z-10 rounded-full bg-background/55 px-3 py-1 text-primary shadow-lg backdrop-blur-md">
-        {`Tree to Cup: Step ${index + 1} of ${count}`}
+        {`${badgeLabel}: Step ${index + 1} of ${count}`}
       </span>
 
       {/* Caption */}

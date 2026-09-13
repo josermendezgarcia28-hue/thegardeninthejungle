@@ -15,7 +15,11 @@ export function ProductCard({ product }: { product: Product }) {
     <article className="group flex flex-col overflow-hidden rounded-2xl border border-primary/20 bg-secondary/35 shadow-2xl backdrop-blur-md transition-colors hover:border-primary/40">
       <div className="relative aspect-square overflow-hidden">
         {product.gallery && product.gallery.length > 0 ? (
-          <CacaoCarousel slides={product.gallery} />
+          <CacaoCarousel
+            slides={product.gallery}
+            badgeLabel={product.galleryBadge}
+            ariaLabel={`${product.name} gallery`}
+          />
         ) : (
           <Image
             src={product.image || '/placeholder.svg'}
