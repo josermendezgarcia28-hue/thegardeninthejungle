@@ -7,6 +7,7 @@
 @theme inline {
   --font-sans: var(--font-inter);
   --font-serif: var(--font-fraunces);
+  --font-display: var(--font-uncial);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -174,7 +175,8 @@
 .jungle-title {
   display: inline-flex;
   flex-wrap: wrap;
-  gap: 0 0.28em;
+  gap: 0.1em 0.4em;
+  text-shadow: 0 2px 18px oklch(0.12 0.03 155 / 0.55);
 }
 
 .jungle-title-word {
@@ -189,12 +191,12 @@
     var(--enter-delay), calc(var(--enter-delay) + 0.9s), 0s;
   background: linear-gradient(
     100deg,
-    oklch(0.72 0.12 150) 0%,
-    oklch(0.85 0.05 120) 20%,
-    oklch(0.86 0.14 82) 40%,
-    oklch(0.94 0.06 100) 55%,
-    oklch(0.72 0.12 150) 80%,
-    oklch(0.85 0.14 82) 100%
+    oklch(0.58 0.13 150) 0%,
+    oklch(0.72 0.08 130) 20%,
+    oklch(0.8 0.15 82) 42%,
+    oklch(0.9 0.08 95) 55%,
+    oklch(0.55 0.12 150) 80%,
+    oklch(0.78 0.15 82) 100%
   );
   background-size: 200% 100%;
   -webkit-background-clip: text;
@@ -209,12 +211,38 @@
     animation: none;
     background: linear-gradient(
       100deg,
-      oklch(0.78 0.12 150),
-      oklch(0.86 0.14 82)
+      oklch(0.62 0.13 150),
+      oklch(0.82 0.15 82)
     );
     background-size: 100% 100%;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
+}
+
+/* Indigenous tribal weave + border motifs */
+.tribal-weave {
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      oklch(0.8 0.13 78 / 0.05) 0 1px,
+      transparent 1px 13px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      oklch(0.8 0.13 78 / 0.05) 0 1px,
+      transparent 1px 13px
+    );
+}
+
+.tribal-band {
+  height: 8px;
+  background-color: transparent;
+  background-image:
+    linear-gradient(45deg, oklch(0.8 0.13 78 / 0.55) 25%, transparent 25%),
+    linear-gradient(-45deg, oklch(0.8 0.13 78 / 0.55) 25%, transparent 25%);
+  background-size: 14px 14px;
+  background-repeat: repeat-x;
+  background-position: bottom;
 }

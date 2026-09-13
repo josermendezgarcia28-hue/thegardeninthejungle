@@ -15,15 +15,15 @@ export default function HomePage() {
       {/* Hero */}
       <section className="relative flex min-h-[88vh] items-center overflow-hidden">
         <Image
-          src="/images/hero-jungle.png"
-          alt="Sunlight filtering through a lush tropical jungle canopy"
+          src="/images/hero-tribal-botanical.png"
+          alt="Indigenous tribal botanical illustration of Mondia Whitei, passionflower and cacao blooms in a misty jungle"
           fill
           priority
           sizes="100vw"
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/55 to-background" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/70 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/75 via-background/45 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/55 to-transparent" />
 
         <div className="relative mx-auto w-full max-w-6xl px-5 py-24">
           <div className="max-w-2xl">
@@ -33,7 +33,7 @@ export default function HomePage() {
             </span>
             <AnimatedTitle
               text="The Garden in the Jungle"
-              className="mt-6 font-serif text-5xl leading-[1.05] tracking-tight sm:text-6xl md:text-7xl"
+              className="mt-6 font-display text-4xl leading-[1.15] sm:text-5xl md:text-6xl"
             />
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-foreground/85 text-pretty">
               A place where plants and people come together. Explore the most

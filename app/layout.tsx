@@ -1,6 +1,6 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Fraunces, Inter } from 'next/font/google'
+import { Fraunces, Inter, Uncial_Antiqua } from 'next/font/google'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import './globals.css'
@@ -14,6 +14,13 @@ const inter = Inter({
 const fraunces = Fraunces({
   subsets: ['latin'],
   variable: '--font-fraunces',
+  display: 'swap',
+})
+
+const uncialAntiqua = Uncial_Antiqua({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-uncial',
   display: 'swap',
 })
 
@@ -35,7 +42,10 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${fraunces.variable}`}>
+    <html
+      lang="en"
+      className={`${inter.variable} ${fraunces.variable} ${uncialAntiqua.variable}`}
+    >
       <body className="antialiased font-sans flex min-h-dvh flex-col">
         <SiteHeader />
         <div className="flex-1">{children}</div>
