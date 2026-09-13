@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from 'next'
 import { Fraunces, Inter, Uncial_Antiqua } from 'next/font/google'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
+import { SiteBackground } from '@/components/site-background'
 import './globals.css'
 
 const inter = Inter({
@@ -44,9 +45,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${fraunces.variable} ${uncialAntiqua.variable}`}
+      className={`${inter.variable} ${fraunces.variable} ${uncialAntiqua.variable} bg-background`}
     >
-      <body className="antialiased font-sans flex min-h-dvh flex-col">
+      <body className="antialiased font-sans flex min-h-dvh flex-col bg-transparent">
+        <SiteBackground />
         <SiteHeader />
         <div className="flex-1">{children}</div>
         <SiteFooter />
