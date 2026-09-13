@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: var(--font-inter);
+  --font-sans: var(--font-lora);
   --font-serif: var(--font-fraunces);
   --font-display: var(--font-uncial);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -125,7 +125,14 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground leading-relaxed tracking-wide;
+  }
+  /* Keep display/serif headings tight; only body copy gets the airy tracking */
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply tracking-normal;
   }
 }
 
