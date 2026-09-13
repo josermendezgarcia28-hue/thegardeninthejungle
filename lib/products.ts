@@ -21,25 +21,24 @@ export const products: Product[] = [
     image: '/images/product-cacao.png',
     gallery: [
       {
-        src: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=1000&q=80',
-        caption: 'Theobroma Cacao — Living canopy pods',
+        src: 'https://upload.wikimedia.org/wikipedia/commons/e/e0/Cocoa_Pods.JPG',
+        caption: 'Theobroma Cacao — Ripe pods growing on the tree trunk',
       },
       {
-        src: 'https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=1000&q=80',
-        caption: 'Raw pod cracked open with fresh seed pulp',
+        src: 'https://upload.wikimedia.org/wikipedia/commons/d/d1/Cacao_Beans_Drying.JPG',
+        caption: 'Traditional sun-drying and fermentation of harvested beans',
       },
       {
-        src: 'https://images.unsplash.com/photo-1587132137056-bfbf0166836e?auto=format&fit=crop&w=1000&q=80',
-        caption: 'Traditional fire-roasting and sun-curing',
+        src: 'https://upload.wikimedia.org/wikipedia/commons/e/e4/Cocoa_bean_roasted2.jpg',
+        caption: 'Fire-roasted whole cacao beans ready for stone grinding',
       },
       {
         src: 'https://www.mayamooncacao.com/cdn/shop/files/Mayan_organic_ceremonial_Cacao_1_Lb_Fresh_Ground_-_Maya_Moon_Cacao-2576930.png?v=1785969117&width=800',
-        caption:
-          'Maya Moon Mayan Organic Ceremonial Cacao (1 Lb Fresh Ground)',
+        caption: 'Mayan Organic Ceremonial Cacao (1 Lb Fresh Ground)',
       },
       {
         src: 'https://www.mayamooncacao.com/cdn/shop/files/Mayan_organic_ceremonial_Cacao_Powder_0.5_Lb_Fresh_Ground_-_Maya_Moon_Cacao-2576943.png?v=1785969169&width=800',
-        caption: 'Maya Moon Ceremonial Cacao (0.5 Lb Gold Pouch)',
+        caption: 'Mayan Organic Ceremonial Cacao (0.5 Lb Fresh Ground)',
       },
       {
         src: 'https://www.mayamooncacao.com/cdn/shop/files/mood-enhancing-cacao-nibs-snack-ritual-use-guatemala.png?v=1785970485&width=800',
