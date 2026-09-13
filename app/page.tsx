@@ -29,16 +29,55 @@ export default function HomePage() {
     <main>
       {/* Hero */}
       <section className="relative flex min-h-[88vh] items-center overflow-hidden">
-        <Image
-          src="/images/hero-tribal-botanical.png"
-          alt="Indigenous tribal botanical illustration of Mondia Whitei, passionflower and cacao blooms in a misty jungle"
-          fill
-          priority
-          sizes="100vw"
-          className="ken-burns object-cover"
-        />
+        {/* Animated turbulence/displacement filter for the melting DMT morph */}
+        <svg className="dmt-defs" aria-hidden="true">
+          <filter id="dmt-warp">
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.008 0.012"
+              numOctaves={2}
+              seed={7}
+              result="noise"
+            >
+              <animate
+                attributeName="baseFrequency"
+                dur="24s"
+                values="0.008 0.012;0.017 0.021;0.008 0.012"
+                repeatCount="indefinite"
+              />
+            </feTurbulence>
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="noise"
+              scale={22}
+              xChannelSelector="R"
+              yChannelSelector="G"
+            >
+              <animate
+                attributeName="scale"
+                dur="12s"
+                values="14;40;14"
+                repeatCount="indefinite"
+              />
+            </feDisplacementMap>
+          </filter>
+        </svg>
+
+        <div className="dmt-warp" aria-hidden="true">
+          <Image
+            src="/images/hero-tribal-botanical.png"
+            alt="Indigenous tribal botanical illustration of Mondia Whitei, passionflower and cacao blooms in a misty jungle"
+            fill
+            priority
+            sizes="100vw"
+            className="ken-burns object-cover"
+          />
+        </div>
         <div className="absolute inset-0 bg-gradient-to-b from-background/75 via-background/45 to-background" />
         <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/55 to-transparent" />
+
+        {/* Blast-off portal: sacred-geometry filaments radiating from center */}
+        <div className="dmt-portal" aria-hidden="true" />
 
         {/* Atmospheric drifting pollen / spores */}
         <div className="pollen-layer" aria-hidden="true">
