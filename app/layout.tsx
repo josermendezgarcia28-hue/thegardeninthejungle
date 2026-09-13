@@ -1,21 +1,23 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Fraunces, Lora, Uncial_Antiqua } from 'next/font/google'
+import { Cormorant_Garamond, Tenor_Sans, Uncial_Antiqua } from 'next/font/google'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { SiteBackground } from '@/components/site-background'
 import './globals.css'
 
-const lora = Lora({
+const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-lora',
+  weight: ['300', '400', '500', '600'],
+  style: ['normal', 'italic'],
+  variable: '--font-cormorant',
   display: 'swap',
 })
 
-const fraunces = Fraunces({
+const tenorSans = Tenor_Sans({
   subsets: ['latin'],
-  variable: '--font-fraunces',
+  weight: '400',
+  variable: '--font-tenor',
   display: 'swap',
 })
 
@@ -46,7 +48,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${lora.variable} ${fraunces.variable} ${uncialAntiqua.variable} bg-background`}
+      className={`${cormorant.variable} ${tenorSans.variable} ${uncialAntiqua.variable} bg-background`}
     >
       <body className="antialiased font-sans flex min-h-dvh flex-col bg-transparent">
         <SiteBackground />

@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { useState } from 'react'
-import { Check, ExternalLink, Sprout } from 'lucide-react'
+import { ExternalLink, Sprout } from 'lucide-react'
 import type { Product } from '@/lib/products'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -20,30 +20,27 @@ export function ProductCard({ product }: { product: Product }) {
           sizes="(max-width: 768px) 100vw, 33vw"
           className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
-        <span className="absolute left-3 top-3 rounded-full bg-background/80 px-3 py-1 text-xs font-medium tracking-wide text-primary backdrop-blur-sm">
+        <span className="eyebrow absolute left-3 top-3 rounded-full bg-background/80 px-3 py-1 text-primary backdrop-blur-sm">
           {product.category}
         </span>
       </div>
 
       <div className="flex flex-1 flex-col p-6">
-        <p className="font-serif text-sm italic text-primary">
-          {product.tagline}
-        </p>
-        <h3 className="mt-1 font-serif text-xl leading-snug text-card-foreground">
+        <p className="botanical-name text-sm">{product.tagline}</p>
+        <h3 className="mt-1.5 font-serif text-2xl font-medium leading-snug tracking-[0.01em] text-card-foreground">
           {product.name}
         </h3>
-        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+        <p className="mt-3 leading-relaxed text-muted-foreground/85">
           {product.description}
         </p>
 
-        <ul className="mt-5 space-y-2">
+        <ul className="mt-5 space-y-2.5">
           {product.benefits.map((benefit) => (
-            <li key={benefit} className="flex items-start gap-2 text-sm">
-              <Check
-                className="mt-0.5 size-4 shrink-0 text-secondary"
-                aria-hidden="true"
-              />
-              <span className="text-foreground/90">{benefit}</span>
+            <li key={benefit} className="flex items-start gap-3">
+              <span className="lux-marker" aria-hidden="true" />
+              <span className="leading-relaxed text-foreground/90">
+                {benefit}
+              </span>
             </li>
           ))}
         </ul>

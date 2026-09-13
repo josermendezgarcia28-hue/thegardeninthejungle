@@ -13,13 +13,11 @@ export default function ProductsPage() {
     <main>
       <section className="border-b border-primary/15 bg-secondary/20 backdrop-blur-md">
         <div className="mx-auto max-w-6xl px-5 py-16 md:py-20">
-          <p className="font-serif text-sm italic text-primary">
-            The most exotic substances on the planet
-          </p>
-          <h1 className="mt-2 font-serif text-4xl md:text-5xl">
+          <p className="eyebrow">The most exotic substances on the planet</p>
+          <h1 className="mt-3 font-serif text-5xl font-light md:text-6xl">
             The Collection
           </h1>
-          <p className="mt-4 max-w-2xl text-muted-foreground text-pretty">
+          <p className="mt-4 max-w-2xl text-muted-foreground/85 text-pretty">
             The world of plants is as vast as can be. Explore this array of
             exotic and commonly known remedies, read what each offers your
             health, then reveal its link whenever you&apos;re ready.
@@ -35,9 +33,9 @@ export default function ProductsPage() {
           return (
             <section key={category} className="mb-16 last:mb-0">
               <div className="mb-8 flex items-center gap-4">
-                <h2 className="font-serif text-2xl md:text-3xl">{category}</h2>
+                <h2 className="section-heading">{category}</h2>
                 <span className="h-px flex-1 bg-border" />
-                <span className="text-sm text-muted-foreground">
+                <span className="eyebrow text-muted-foreground">
                   {items.length}{' '}
                   {items.length === 1 ? 'find' : 'finds'}
                 </span>

@@ -40,7 +40,7 @@ export function SiteHeader() {
               key={link.href}
               href={link.href}
               className={cn(
-                'text-sm tracking-wide transition-colors hover:text-primary',
+                'eyebrow transition-colors hover:text-primary',
                 pathname === link.href
                   ? 'text-primary'
                   : 'text-muted-foreground',
@@ -76,7 +76,7 @@ export function SiteHeader() {
                 href={link.href}
                 onClick={() => setOpen(false)}
                 className={cn(
-                  'py-1 text-base transition-colors hover:text-primary',
+                  'eyebrow py-1 text-sm transition-colors hover:text-primary',
                   pathname === link.href
                     ? 'text-primary'
                     : 'text-muted-foreground',

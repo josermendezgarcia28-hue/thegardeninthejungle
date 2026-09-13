@@ -5,8 +5,9 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: var(--font-lora);
-  --font-serif: var(--font-fraunces);
+  --font-sans: var(--font-cormorant);
+  --font-serif: var(--font-cormorant);
+  --font-label: var(--font-tenor);
   --font-display: var(--font-uncial);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -125,14 +126,26 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground leading-relaxed tracking-wide;
+    @apply bg-background text-foreground text-[1.06rem] leading-relaxed tracking-[0.015em] md:text-lg;
   }
-  /* Keep display/serif headings tight; only body copy gets the airy tracking */
-  h1,
-  h2,
-  h3,
-  h4 {
-    @apply tracking-normal;
+}
+
+@layer components {
+  /* Tenor Sans micro-label: category pills, kickers, nav */
+  .eyebrow {
+    @apply font-label text-xs font-medium uppercase tracking-[0.22em] text-primary/90;
+  }
+  /* Cormorant small-caps section title with wide tracking */
+  .section-heading {
+    @apply font-serif text-2xl font-light uppercase tracking-[0.16em] text-primary/90 md:text-3xl;
+  }
+  /* Golden italic botanical accent */
+  .botanical-name {
+    @apply font-serif italic text-primary;
+  }
+  /* Refined herbal diamond marker for benefit lists */
+  .lux-marker {
+    @apply mt-[0.5em] size-1.5 shrink-0 rotate-45 rounded-[1px] bg-primary/80;
   }
 }
 

@@ -16,14 +16,14 @@ export default function AboutPage() {
     <main>
       <section className="mx-auto grid max-w-6xl items-center gap-12 px-5 py-16 md:grid-cols-2 md:py-24">
         <div>
-          <span className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/40 px-4 py-1.5 text-xs tracking-widest text-primary uppercase">
+          <span className="eyebrow inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/40 px-4 py-1.5">
             <Leaf className="size-3.5" aria-hidden="true" />
             Our story
           </span>
-          <h1 className="mt-6 font-serif text-4xl leading-tight text-balance md:text-5xl">
+          <h1 className="mt-6 font-serif text-4xl font-light leading-tight text-balance md:text-5xl">
             Why you should care about health
           </h1>
-          <div className="mt-6 space-y-4 text-muted-foreground leading-relaxed">
+          <div className="mt-6 space-y-4 text-muted-foreground/85 leading-relaxed">
             <p>
               In the modern world we are bombarded every waking day with toxins
               and chemicals that damage our body, mind and spirit. As
@@ -59,9 +59,7 @@ export default function AboutPage() {
 
       <section className="border-y border-primary/15 bg-secondary/20 backdrop-blur-md">
         <div className="mx-auto max-w-6xl px-5 py-16">
-          <h2 className="font-serif text-2xl md:text-3xl">
-            What this garden grows on
-          </h2>
+          <h2 className="section-heading">What this garden grows on</h2>
           <div className="mt-8 grid gap-8 md:grid-cols-3">
             {[
               {
@@ -78,10 +76,10 @@ export default function AboutPage() {
               },
             ].map((item) => (
               <div key={item.title}>
-                <h3 className="font-serif text-lg text-primary">
+                <h3 className="section-heading text-lg md:text-xl">
                   {item.title}
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                <p className="mt-2 leading-relaxed text-muted-foreground/85">
                   {item.body}
                 </p>
               </div>
@@ -91,10 +89,10 @@ export default function AboutPage() {
       </section>
 
       <section className="mx-auto max-w-6xl px-5 py-20 text-center">
-        <h2 className="mx-auto max-w-2xl font-serif text-3xl leading-tight text-balance md:text-4xl">
+        <h2 className="mx-auto max-w-2xl font-serif text-4xl font-light leading-tight text-balance md:text-5xl">
           Awaken your genetic superpowers
         </h2>
-        <p className="mx-auto mt-4 max-w-xl text-muted-foreground text-pretty">
+        <p className="mx-auto mt-4 max-w-xl text-muted-foreground/85 text-pretty">
           Tap back into your roots. Explore the vast array of exotic and
           commonly known plant remedies waiting in the garden.
         </p>
