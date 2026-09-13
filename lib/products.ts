@@ -4,6 +4,8 @@ export type Product = {
   tagline: string
   category: string
   image: string
+  /** Optional media gallery — when present, cards render an image carousel. */
+  gallery?: { src: string; caption: string }[]
   description: string
   benefits: string[]
   /** Affiliate URL — swap these placeholders for your real links. */
@@ -14,17 +16,44 @@ export const products: Product[] = [
   {
     slug: 'cacao',
     name: 'Ceremonial Cacao',
-    tagline: 'The original "chocolate"',
+    tagline: 'Handcrafted Mayan Ceremonial Cacao from Guatemala',
     category: 'Superfoods & Botanicals',
     image: '/images/product-cacao.png',
+    gallery: [
+      {
+        src: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=1000&q=80',
+        caption: 'Theobroma Cacao — Living canopy pods',
+      },
+      {
+        src: 'https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=1000&q=80',
+        caption: 'Raw pod cracked open with fresh seed pulp',
+      },
+      {
+        src: 'https://images.unsplash.com/photo-1587132137056-bfbf0166836e?auto=format&fit=crop&w=1000&q=80',
+        caption: 'Traditional fire-roasting and sun-curing',
+      },
+      {
+        src: 'https://www.mayamooncacao.com/cdn/shop/files/Mayan_organic_ceremonial_Cacao_1_Lb_Fresh_Ground_-_Maya_Moon_Cacao-2576930.png?v=1785969117&width=800',
+        caption:
+          'Maya Moon Mayan Organic Ceremonial Cacao (1 Lb Fresh Ground)',
+      },
+      {
+        src: 'https://www.mayamooncacao.com/cdn/shop/files/Mayan_organic_ceremonial_Cacao_Powder_0.5_Lb_Fresh_Ground_-_Maya_Moon_Cacao-2576943.png?v=1785969169&width=800',
+        caption: 'Maya Moon Ceremonial Cacao (0.5 Lb Gold Pouch)',
+      },
+      {
+        src: 'https://www.mayamooncacao.com/cdn/shop/files/mood-enhancing-cacao-nibs-snack-ritual-use-guatemala.png?v=1785970485&width=800',
+        caption: 'Fire-Roasted, Stone-Ground Cacao Nibs from Guatemala',
+      },
+    ],
     description:
       'From the Theobroma Cacao tree and its raw, unrefined bean. Long documented for health benefits far beyond its reputation as an indulgent confection.',
     benefits: [
-      'A natural source of healthy fats and essential minerals',
-      'Rich in antioxidants and mood-supporting compounds',
-      'Gently uplifting without the crash of refined sugar',
+      '100% pure stone-ground Theobroma cacao',
+      'Rich in theobromine, magnesium and mood-elevating anandamide',
+      'Single-origin, ethically sourced from family-run agroforestry in Guatemala',
     ],
-    affiliateUrl: 'https://example.com/affiliate/cacao',
+    affiliateUrl: 'https://www.mayamooncacao.com/collections/fresh-ground-cacao',
   },
   {
     slug: 'mushrooms',

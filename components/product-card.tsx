@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { ExternalLink, Sprout } from 'lucide-react'
 import type { Product } from '@/lib/products'
 import { Button, buttonVariants } from '@/components/ui/button'
+import { CacaoCarousel } from '@/components/cacao-carousel'
 import { cn } from '@/lib/utils'
 
 export function ProductCard({ product }: { product: Product }) {
@@ -13,14 +14,18 @@ export function ProductCard({ product }: { product: Product }) {
   return (
     <article className="group flex flex-col overflow-hidden rounded-2xl border border-primary/20 bg-secondary/35 shadow-2xl backdrop-blur-md transition-colors hover:border-primary/40">
       <div className="relative aspect-square overflow-hidden">
-        <Image
-          src={product.image || '/placeholder.svg'}
-          alt={product.name}
-          fill
-          sizes="(max-width: 768px) 100vw, 33vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
-        />
-        <span className="eyebrow absolute left-3 top-3 rounded-full bg-background/80 px-3 py-1 text-primary backdrop-blur-sm">
+        {product.gallery && product.gallery.length > 0 ? (
+          <CacaoCarousel slides={product.gallery} />
+        ) : (
+          <Image
+            src={product.image || '/placeholder.svg'}
+            alt={product.name}
+            fill
+            sizes="(max-width: 768px) 100vw, 33vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        )}
+        <span className="eyebrow absolute left-3 top-3 z-20 rounded-full bg-background/80 px-3 py-1 text-primary backdrop-blur-sm">
           {product.category}
         </span>
       </div>
