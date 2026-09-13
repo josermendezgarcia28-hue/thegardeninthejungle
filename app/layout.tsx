@@ -29,7 +29,7 @@ const uncialAntiqua = Uncial_Antiqua({
 export const metadata: Metadata = {
   title: 'The Garden In The Jungle — Experience Nature, Experience Vitality',
   description:
-    'A place where plants and people come together. Explore exotic natural remedies — Moringa, medicinal mushrooms, shilajit, cacao and more — and learn the health benefits behind each one.',
+    'A place where plants and people come together. Explore exotic natural remedies — shilajit, medicinal mushrooms, ceremonial cacao and more — and learn the health benefits behind each one.',
   generator: 'v0.app',
 }
 
