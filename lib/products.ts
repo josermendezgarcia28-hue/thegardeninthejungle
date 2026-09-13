@@ -12,21 +12,6 @@ export type Product = {
 
 export const products: Product[] = [
   {
-    slug: 'moringa',
-    name: 'Moringa Oleifera',
-    tagline: 'The botanical of the year',
-    category: 'Superfoods & Botanicals',
-    image: '/images/product-moringa.png',
-    description:
-      'In 2008 the National Institute of Health named Moringa the "Botanical of the Year." A vibrant, nutrient-dense green harvested from one of the most nourishing plants on earth.',
-    benefits: [
-      'Rich in vitamins A, C and E plus iron and calcium',
-      'Naturally supports energy and daily vitality',
-      'Loaded with antioxidants that help fight inflammation',
-    ],
-    affiliateUrl: 'https://example.com/affiliate/moringa',
-  },
-  {
     slug: 'cacao',
     name: 'Ceremonial Cacao',
     tagline: 'The original "chocolate"',
