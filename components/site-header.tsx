@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
-import { Leaf, Menu, X } from 'lucide-react'
+import { Flower2, Menu, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const links = [
@@ -17,19 +17,19 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-md">
+    <header className="tribal-weave sticky top-0 z-50 bg-background/92 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
         <Link
           href="/"
-          className="flex items-center gap-2 font-serif text-lg leading-tight tracking-tight"
+          className="flex items-center gap-2.5 font-display text-base leading-tight tracking-wide text-foreground"
           onClick={() => setOpen(false)}
         >
-          <span className="flex size-8 items-center justify-center rounded-full bg-secondary/30 text-primary">
-            <Leaf className="size-4" aria-hidden="true" />
+          <span className="flex size-9 items-center justify-center rounded-full border border-primary/40 bg-secondary/25 text-primary shadow-[0_0_14px_-4px_oklch(0.8_0.13_78_/_0.7)]">
+            <Flower2 className="size-5" aria-hidden="true" />
           </span>
           <span>
             The Garden
-            <span className="text-muted-foreground"> in the </span>
+            <span className="text-primary/70"> in the </span>
             Jungle
           </span>
         </Link>
@@ -61,6 +61,8 @@ export function SiteHeader() {
           {open ? <X className="size-5" /> : <Menu className="size-5" />}
         </button>
       </div>
+
+      <div className="tribal-band" aria-hidden="true" />
 
       {open && (
         <nav
