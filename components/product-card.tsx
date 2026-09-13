@@ -10,6 +10,11 @@ import { cn } from '@/lib/utils'
 
 export function ProductCard({ product }: { product: Product }) {
   const [revealed, setRevealed] = useState(false)
+  const [activeSlide, setActiveSlide] = useState(0)
+
+  const activeHref =
+    product.gallery?.[activeSlide]?.href ?? product.affiliateUrl
+  const hasSpeciesBadge = Boolean(product.gallery?.some((s) => s.badge))
 
   return (
     <article className="group flex flex-col overflow-hidden rounded-2xl border border-primary/20 bg-secondary/35 shadow-2xl backdrop-blur-md transition-colors hover:border-primary/40">
@@ -19,6 +24,7 @@ export function ProductCard({ product }: { product: Product }) {
             slides={product.gallery}
             badgeLabel={product.galleryBadge}
             ariaLabel={`${product.name} gallery`}
+            onActiveChange={setActiveSlide}
           />
         ) : (
           <Image
@@ -29,9 +35,11 @@ export function ProductCard({ product }: { product: Product }) {
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         )}
-        <span className="eyebrow absolute left-3 top-3 z-20 rounded-full bg-background/80 px-3 py-1 text-primary backdrop-blur-sm">
-          {product.category}
-        </span>
+        {!hasSpeciesBadge && (
+          <span className="eyebrow absolute left-3 top-3 z-20 rounded-full bg-background/80 px-3 py-1 text-primary backdrop-blur-sm">
+            {product.category}
+          </span>
+        )}
       </div>
 
       <div className="flex flex-1 flex-col p-6">
@@ -58,7 +66,7 @@ export function ProductCard({ product }: { product: Product }) {
 
         {revealed ? (
           <a
-            href={product.affiliateUrl}
+            href={activeHref}
             target="_blank"
             rel="noopener noreferrer sponsored"
             className={cn(

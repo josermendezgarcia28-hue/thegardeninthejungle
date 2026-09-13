@@ -7,7 +7,11 @@ import { cn } from '@/lib/utils'
 
 export type CarouselSlide = {
   src: string
-  caption: string
+  caption?: string
+  title?: string
+  subtext?: string
+  badge?: string
+  href?: string
 }
 
 export function CacaoCarousel({
@@ -16,21 +20,28 @@ export function CacaoCarousel({
   autoPlayMs = 5000,
   badgeLabel = 'Tree to Cup',
   ariaLabel = 'Product gallery',
+  onActiveChange,
 }: {
   slides: CarouselSlide[]
   className?: string
   autoPlayMs?: number
   badgeLabel?: string
   ariaLabel?: string
+  onActiveChange?: (index: number) => void
 }) {
   const [index, setIndex] = useState(0)
   const [paused, setPaused] = useState(false)
   const count = slides.length
+  const active = slides[index]
 
   const go = useCallback(
     (next: number) => setIndex((prev) => (next + count) % count),
     [count],
   )
+
+  useEffect(() => {
+    onActiveChange?.(index)
+  }, [index, onActiveChange])
 
   const prefersReduced = useRef(false)
   useEffect(() => {
@@ -80,17 +91,35 @@ export function CacaoCarousel({
       ))}
 
       {/* Legibility gradient for the caption */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-background/95 via-background/50 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-background/95 via-background/55 to-transparent" />
 
-      {/* Step badge */}
-      <span className="eyebrow absolute left-3 bottom-3 z-10 rounded-full bg-background/55 px-3 py-1 text-primary shadow-lg backdrop-blur-md">
-        {`${badgeLabel}: Step ${index + 1} of ${count}`}
-      </span>
+      {active?.badge ? (
+        /* Species pill (top-right) */
+        <span className="eyebrow absolute right-3 top-3 z-20 max-w-[75%] rounded-full bg-background/75 px-3 py-1 text-right text-primary shadow-lg backdrop-blur-md">
+          {`${badgeLabel} ${index + 1} of ${count}: ${active.badge}`}
+        </span>
+      ) : (
+        /* Step badge (bottom-left) */
+        <span className="eyebrow absolute left-3 bottom-3 z-10 rounded-full bg-background/55 px-3 py-1 text-primary shadow-lg backdrop-blur-md">
+          {`${badgeLabel}: Step ${index + 1} of ${count}`}
+        </span>
+      )}
 
-      {/* Caption */}
-      <p className="absolute inset-x-4 bottom-12 z-10 text-pretty text-sm leading-snug text-foreground/95 drop-shadow">
-        {slides[index]?.caption}
-      </p>
+      {/* Caption / rich title block */}
+      {active?.title ? (
+        <div className="absolute inset-x-4 bottom-11 z-10">
+          <p className="font-serif text-base font-medium leading-snug text-foreground drop-shadow">
+            {active.title}
+          </p>
+          <p className="mt-1 text-pretty text-xs leading-snug text-foreground/80 drop-shadow">
+            {active.subtext}
+          </p>
+        </div>
+      ) : (
+        <p className="absolute inset-x-4 bottom-12 z-10 text-pretty text-sm leading-snug text-foreground/95 drop-shadow">
+          {active?.caption}
+        </p>
+      )}
 
       {count > 1 && (
         <>

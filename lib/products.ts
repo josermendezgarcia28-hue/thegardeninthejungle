@@ -5,7 +5,19 @@ export type Product = {
   category: string
   image: string
   /** Optional media gallery — when present, cards render an image carousel. */
-  gallery?: { src: string; caption: string }[]
+  gallery?: {
+    src: string
+    /** Simple caption (used when title/subtext are absent). */
+    caption?: string
+    /** Rich overlay title, e.g. "Lion's Mane — Brain & Cognitive Vitality". */
+    title?: string
+    /** Supporting overlay copy beneath the title. */
+    subtext?: string
+    /** Short label for the corner species pill, e.g. "Lion's Mane". */
+    badge?: string
+    /** Per-slide destination — the card action opens the active slide's link. */
+    href?: string
+  }[]
   /** Step-badge label for the gallery carousel, e.g. "Tree to Cup". */
   galleryBadge?: string
   description: string
@@ -65,33 +77,63 @@ export const products: Product[] = [
     image: '/images/product-mushrooms.png',
     gallery: [
       {
-        src: "https://upload.wikimedia.org/wikipedia/commons/f/f1/Lion%27s-mane_mushroom_imported_from_iNaturalist_photo_29576097_on_21_March_2024.jpg",
-        caption: "Hericium Erinaceus — Wild Lion's Mane cascading on hardwood",
-      },
-      {
-        src: 'https://upload.wikimedia.org/wikipedia/commons/a/a9/Ganoderma.lucidum.shanofee.png',
-        caption: 'Ganoderma Lucidum — Ancient Red Reishi fruiting conk',
-      },
-      {
-        src: 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Trametes_versicolor_G4_%281%29.JPG',
-        caption: 'Trametes Versicolor — Multi-zoned wild Turkey Tail rosettes',
-      },
-      {
         src: 'https://realmushrooms.com/cdn/shop/files/Lions-Mane-120_hide-ca.png?v=1768368372',
-        caption:
-          "Real Mushrooms Organic Lion's Mane Extract Capsules (120 count)",
+        badge: "Lion's Mane",
+        title: "Lion's Mane — Brain & Cognitive Vitality",
+        subtext:
+          'Hot-water extracted organic fruiting body rich in hericenones for memory, focus, and nerve growth factor support.',
+        href: 'https://realmushrooms.com/products/organic-lions-mane-extract-capsules',
+      },
+      {
+        src: 'https://realmushrooms.com/cdn/shop/files/Reishi-90_hide-ca.png?v=1772562784',
+        badge: 'Red Reishi',
+        title: 'Red Reishi — The Mushroom of Immortality',
+        subtext:
+          'Ancient adaptogen containing triterpenes and beta-glucans to regulate stress, calm the spirit, and support restorative sleep.',
+        href: 'https://realmushrooms.com/products/reishi-mushroom-capsules',
+      },
+      {
+        src: 'https://realmushrooms.com/cdn/shop/files/Cordyceps-120_hide-ca.png?v=1772220014',
+        badge: 'Cordyceps-M',
+        title: 'Cordyceps-M — Physical Energy & Stamina',
+        subtext:
+          'Cultivated fruiting bodies rich in cordycepin to optimize oxygen consumption, endurance, and cellular ATP production.',
+        href: 'https://realmushrooms.com/products/organic-cordyceps-extract-capsules',
+      },
+      {
+        src: 'https://realmushrooms.com/cdn/shop/files/Turkey-Tail-90_hide-ca.png?v=1772558592',
+        badge: 'Turkey Tail',
+        title: 'Turkey Tail — Gut & Immune Defense',
+        subtext:
+          'Potent source of polysaccharopeptides (PSK and PSP) and prebiotic beta-glucans for a resilient microbiome.',
+        href: 'https://realmushrooms.com/products/organic-turkey-tail-extract-capsules',
+      },
+      {
+        src: 'https://realmushrooms.com/cdn/shop/files/chaga-120_hide-ca.png?v=1772218885',
+        badge: 'Chaga',
+        title: 'Chaga — King of Forest Antioxidants',
+        subtext:
+          'Wild-harvested birch conk extract loaded with betulinic acid and polyphenols for cellular health and gastrointestinal resilience.',
+        href: 'https://realmushrooms.com/products/organic-chaga-mushroom-extract-capsules',
+      },
+      {
+        src: 'https://realmushrooms.com/cdn/shop/files/Tremella-120_hide-ca.png?v=1772561064',
+        badge: 'Tremella',
+        title: 'Tremella — Hydration & Cellular Beauty',
+        subtext:
+          'Snow fungus polysaccharide extract holding 500x its weight in water, promoting youthfulness and skin moisture.',
+        href: 'https://realmushrooms.com/products/organic-tremella-extract-capsules',
       },
       {
         src: 'https://realmushrooms.com/cdn/shop/files/5-Defenders-90_hide-ca.png?v=1772562898',
-        caption:
-          'Real Mushrooms 5 Defenders Organic Immune Complex Capsules',
-      },
-      {
-        src: 'https://realmushrooms.com/cdn/shop/files/PDP_LM60_US_front_hide-ca.png?v=1772831735',
-        caption: "Real Mushrooms Pure Organic Lion's Mane Powder (60g pouch)",
+        badge: '5 Defenders',
+        title: '5 Defenders — Synergy Immune Shield',
+        subtext:
+          'Concentrated blend of Reishi, Shiitake, Maitake, Turkey Tail, and Chaga fruiting bodies for comprehensive defense.',
+        href: 'https://realmushrooms.com/products/organic-mushroom-blend-capsules',
       },
     ],
-    galleryBadge: 'Spore to Extract',
+    galleryBadge: 'Species',
     description:
       'Used by traditional healers and royalty for centuries. Reishi, Lion\u2019s Mane, Cordyceps, Tremella, Chaga and Turkey Tail — among the most sought-after fungi in the world.',
     benefits: [
