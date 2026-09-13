@@ -6,6 +6,8 @@ export type Product = {
   image: string
   /** Optional media gallery — when present, cards render an image carousel. */
   gallery?: { src: string; caption: string }[]
+  /** Step-badge label for the gallery carousel, e.g. "Tree to Cup". */
+  galleryBadge?: string
   description: string
   benefits: string[]
   /** Affiliate URL — swap these placeholders for your real links. */
@@ -45,6 +47,7 @@ export const products: Product[] = [
         caption: 'Fire-Roasted, Stone-Ground Cacao Nibs from Guatemala',
       },
     ],
+    galleryBadge: 'Tree to Cup',
     description:
       'From the Theobroma Cacao tree and its raw, unrefined bean. Long documented for health benefits far beyond its reputation as an indulgent confection.',
     benefits: [
@@ -57,17 +60,46 @@ export const products: Product[] = [
   {
     slug: 'mushrooms',
     name: 'Medicinal Mushrooms',
-    tagline: 'The magic of real fungi',
+    tagline: '100% Pure Organic Fruiting Body Mushroom Extracts',
     category: 'Medicinal Mushrooms',
     image: '/images/product-mushrooms.png',
+    gallery: [
+      {
+        src: "https://upload.wikimedia.org/wikipedia/commons/f/f1/Lion%27s-mane_mushroom_imported_from_iNaturalist_photo_29576097_on_21_March_2024.jpg",
+        caption: "Hericium Erinaceus — Wild Lion's Mane cascading on hardwood",
+      },
+      {
+        src: 'https://upload.wikimedia.org/wikipedia/commons/a/a9/Ganoderma.lucidum.shanofee.png',
+        caption: 'Ganoderma Lucidum — Ancient Red Reishi fruiting conk',
+      },
+      {
+        src: 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Trametes_versicolor_G4_%281%29.JPG',
+        caption: 'Trametes Versicolor — Multi-zoned wild Turkey Tail rosettes',
+      },
+      {
+        src: 'https://realmushrooms.com/cdn/shop/files/Lions-Mane-120_hide-ca.png?v=1768368372',
+        caption:
+          "Real Mushrooms Organic Lion's Mane Extract Capsules (120 count)",
+      },
+      {
+        src: 'https://realmushrooms.com/cdn/shop/files/5-Defenders-90_hide-ca.png?v=1772562898',
+        caption:
+          'Real Mushrooms 5 Defenders Organic Immune Complex Capsules',
+      },
+      {
+        src: 'https://realmushrooms.com/cdn/shop/files/PDP_LM60_US_front_hide-ca.png?v=1772831735',
+        caption: "Real Mushrooms Pure Organic Lion's Mane Powder (60g pouch)",
+      },
+    ],
+    galleryBadge: 'Spore to Extract',
     description:
       'Used by traditional healers and royalty for centuries. Reishi, Lion\u2019s Mane, Cordyceps, Tremella, Chaga and Turkey Tail — among the most sought-after fungi in the world.',
     benefits: [
-      'Naturally loaded with antioxidants and polysaccharides',
-      'May support mood, cognition and immune strength',
-      'Traditionally used for stress relief and anti-aging',
+      'Hot water extracted from certified organic whole mushroom fruiting bodies',
+      'Guaranteed active beta-glucans with zero grain mycelium or added starch',
+      'Award-winning purity for cognitive vitality, nerve support, and immune resilience',
     ],
-    affiliateUrl: 'https://example.com/affiliate/mushrooms',
+    affiliateUrl: 'https://realmushrooms.com/collections/best-sellers',
   },
   {
     slug: 'shilajit',
