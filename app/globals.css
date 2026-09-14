@@ -358,6 +358,66 @@
   }
 }
 
+/* Bottom CTA: flowing gradient title, breathing aura, scroll reveal */
+@keyframes cta-gradient-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.cta-gradient-title {
+  background-image: linear-gradient(
+    to right,
+    #60a5fa,
+    #c084fc,
+    #fb923c,
+    #c084fc,
+    #60a5fa
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: cta-gradient-flow 6s ease infinite;
+  will-change: background-position;
+}
+
+@keyframes cta-aura {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(0.98);
+  }
+  50% {
+    opacity: 0.75;
+    transform: scale(1.03);
+  }
+}
+
+.cta-aura {
+  animation: cta-aura 5s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+
+.cta-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.8s ease-out,
+    transform 0.8s ease-out;
+}
+
+.cta-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .pollen-layer {
   position: absolute;
   inset: 0;
@@ -415,6 +475,18 @@
   }
   .dmt-portal {
     display: none;
+  }
+  .cta-gradient-title {
+    animation: none;
+    background-position: 0% 50%;
+  }
+  .cta-aura {
+    animation: none;
+  }
+  .cta-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }
 

@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { ArrowRight, Leaf, HeartPulse, Sparkles } from 'lucide-react'
 import { buttonVariants } from '@/components/ui/button'
 import { AnimatedTitle } from '@/components/animated-title'
+import { ExperienceCta } from '@/components/experience-cta'
 import { ProductCard } from '@/components/product-card'
 import { products } from '@/lib/products'
 import { cn } from '@/lib/utils'
@@ -122,27 +123,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA */}
-      <section className="mx-auto max-w-6xl px-5 py-24">
-        <div className="relative mx-auto max-w-5xl overflow-hidden rounded-3xl border-2 border-purple-700/40 bg-[#241711] p-8 text-center shadow-[0_0_50px_-10px_rgba(147,51,234,0.35)] sm:p-14">
-          <span className="mb-6 inline-block rounded-full border border-blue-500/50 bg-blue-950/80 px-4 py-1.5 text-xs font-black uppercase tracking-widest text-blue-400">
-            The Garden Philosophy
-          </span>
-          <h2 className="mx-auto mb-6 max-w-4xl bg-gradient-to-r from-blue-400 via-purple-400 to-orange-400 bg-clip-text text-4xl font-black uppercase leading-none tracking-tight text-balance text-transparent sm:text-6xl md:text-7xl">
-            Experience is the best teacher
-          </h2>
-          <p className="mx-auto mb-8 max-w-xl text-base font-medium text-stone-300 text-pretty sm:text-lg">
-            What are you willing to learn? Wander the full collection and feel
-            the true sensations that Nature has to offer.
-          </p>
-          <Link
-            href="/products"
-            className="inline-flex items-center justify-center gap-2 rounded-xl border border-orange-400 bg-orange-500 px-8 py-4 font-black uppercase tracking-wide text-stone-950 shadow-lg shadow-orange-950/60 transition-all hover:bg-orange-400"
-          >
-            Explore the collection
-            <ArrowRight className="size-4" aria-hidden="true" />
-          </Link>
-        </div>
-      </section>
+      <ExperienceCta />
     </main>
   )
 }
