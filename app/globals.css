@@ -398,6 +398,29 @@
   animation: fungus-breathe 3.8s ease-in-out infinite;
 }
 
+/* Turkey tail shelf: hinges from its root on the letter (right center),
+   idle flex with a resting -4deg tilt, springs up on title hover. */
+@keyframes fungus-shelf-flex {
+  0%,
+  100% {
+    transform: rotate(-6deg);
+  }
+  50% {
+    transform: rotate(-1deg);
+  }
+}
+
+.fungus-shelf {
+  transform-origin: right center;
+  animation: fungus-shelf-flex 4.2s ease-in-out infinite;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.jungle-title-word:hover .fungus-shelf {
+  animation: none;
+  transform: scale(1.12) rotate(-6deg);
+}
+
 @keyframes fungus-spore {
   0% {
     transform: translate(0, 0) scale(1);
@@ -562,6 +585,12 @@
   .fungus-sway,
   .fungus-breathe {
     animation: none;
+  }
+  .fungus-shelf,
+  .jungle-title-word:hover .fungus-shelf {
+    animation: none;
+    transition: none;
+    transform: rotate(-4deg);
   }
   .fungus-spore,
   .fungus-spore-2 {
