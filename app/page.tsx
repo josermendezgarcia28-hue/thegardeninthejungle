@@ -6,7 +6,6 @@ import {
   ReishiMushroom,
   CordycepsSprout,
   LionsManeFungus,
-  TurkeyTailBracket,
 } from '@/components/hero-fungi'
 import { ExperienceCta } from '@/components/experience-cta'
 import { ProductCard } from '@/components/product-card'
@@ -32,12 +31,7 @@ export default function HomePage() {
               decorations={{
                 0: <ReishiMushroom />,
                 2: <CordycepsSprout />,
-                4: (
-                  <>
-                    <LionsManeFungus />
-                    <TurkeyTailBracket />
-                  </>
-                ),
+                4: <LionsManeFungus />,
               }}
               wordOverrides={{ 2: 'ın' }}
             />

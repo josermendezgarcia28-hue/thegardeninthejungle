@@ -130,34 +130,3 @@ export function LionsManeFungus({ className }: { className?: string }) {
     </span>
   )
 }
-
-// Turkey Tail (Trametes versicolor) — vertical bracket rooted in the right wall
-// of the "l" in "Jungle", its concentric tiers blossoming right into the counter
-// toward the "e" the way bracket fungus stacks up a tree trunk.
-export function TurkeyTailBracket({ className }: { className?: string }) {
-  return (
-    <span
-      aria-hidden="true"
-      className={cn(
-        'pointer-events-none absolute top-[12%] right-[9%] z-10 block h-7 w-4 sm:h-10 sm:w-6',
-        className,
-      )}
-    >
-      <span className="fungus-shelf block h-full w-full drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
-        {/* Rotated upright so the flat base sits flush on the letter's right
-            edge and the rings tier out to the right toward the "e". */}
-        <svg
-          viewBox="0 0 36 28"
-          fill="none"
-          className="h-full w-full -rotate-90"
-        >
-          <path d="M2 26 C2 10, 34 10, 34 26 Z" fill="#292524" />
-          <path d="M5 26 C5 13, 31 13, 31 26 Z" fill="#065f46" />
-          <path d="M9 26 C9 16, 27 16, 27 26 Z" fill="#d97706" />
-          <path d="M13 26 C13 19, 23 19, 23 26 Z" fill="#fef08a" />
-          <path d="M16 26 C16 22, 20 22, 20 26 Z" fill="#44403c" />
-        </svg>
-      </span>
-    </span>
-  )
-}
