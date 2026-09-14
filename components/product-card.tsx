@@ -64,6 +64,16 @@ export function ProductCard({ product }: { product: Product }) {
 
         <div className="mt-6 flex-1" />
 
+        {product.promoCode && (
+          <p className="mb-3 text-center text-sm text-muted-foreground/85">
+            Use code{' '}
+            <span className="font-semibold tracking-wide text-primary">
+              {product.promoCode}
+            </span>{' '}
+            at checkout
+          </p>
+        )}
+
         {revealed ? (
           <a
             href={activeHref}
