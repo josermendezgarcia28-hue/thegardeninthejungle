@@ -24,6 +24,8 @@ export type Product = {
   benefits: string[]
   /** Affiliate URL — swap these placeholders for your real links. */
   affiliateUrl: string
+  /** Optional promo/discount code surfaced on the card. */
+  promoCode?: string
 }
 
 export const products: Product[] = [
@@ -186,7 +188,8 @@ export const products: Product[] = [
       'Supports cellular mitochondrial energy, ATP synthesis, and nutrient absorption',
       'Ethically wild-harvested and purified at low temperatures without chemical solvents',
     ],
-    affiliateUrl: 'https://shop.vibemedx.com/jose',
+    affiliateUrl: 'https://www.vibemedx.com/jose',
+    promoCode: 'JOSE',
   },
   {
     slug: 'crystal-lenses',
