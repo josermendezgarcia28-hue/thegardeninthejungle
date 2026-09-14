@@ -131,22 +131,26 @@ export function LionsManeFungus({ className }: { className?: string }) {
   )
 }
 
-// Turkey Tail (Trametes versicolor) — layered concentric fan gripping the left
-// wall of the "l" in "Jungle" and shelving out toward the "g" like bracket
-// fungus on a tree trunk.
+// Turkey Tail (Trametes versicolor) — vertical bracket climbing the left wall of
+// the "l" in "Jungle", its concentric tiers fanning left over the "g" the way
+// bracket fungus stacks up a tree trunk.
 export function TurkeyTailBracket({ className }: { className?: string }) {
   return (
     <span
       aria-hidden="true"
       className={cn(
-        'pointer-events-none absolute top-[35%] right-[18%] z-10 block h-4 w-5 drop-shadow-md sm:right-[19%] sm:h-7 sm:w-8',
+        'pointer-events-none absolute top-[12%] right-[19%] z-10 block h-7 w-4 sm:h-10 sm:w-6',
         className,
       )}
     >
-      <span className="fungus-shelf block h-full w-full">
-        {/* Mirrored so the root grips the letter on the right and the rings
-            fan out to the left. */}
-        <svg viewBox="0 0 36 28" fill="none" className="h-full w-full -scale-x-100">
+      <span className="fungus-shelf block h-full w-full drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
+        {/* Rotated upright and mirrored so the flat base sits flush on the
+            letter's right edge and the rings tier out to the left. */}
+        <svg
+          viewBox="0 0 36 28"
+          fill="none"
+          className="h-full w-full -rotate-90 -scale-x-100"
+        >
           <path d="M2 26 C2 10, 34 10, 34 26 Z" fill="#292524" />
           <path d="M5 26 C5 13, 31 13, 31 26 Z" fill="#065f46" />
           <path d="M9 26 C9 16, 27 16, 27 26 Z" fill="#d97706" />
