@@ -35,10 +35,6 @@ export default function ProductsPage() {
               <div className="mb-8 flex items-center gap-4">
                 <h2 className="section-heading">{category}</h2>
                 <span className="h-px flex-1 bg-border" />
-                <span className="eyebrow text-muted-foreground">
-                  {items.length}{' '}
-                  {items.length === 1 ? 'find' : 'finds'}
-                </span>
               </div>
 
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
