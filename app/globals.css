@@ -398,9 +398,9 @@
   animation: fungus-breathe 3.8s ease-in-out infinite;
 }
 
-/* Turkey tail shelf: anchored by its root on the letter (right center), a
-   vertical breathing flex with a tiny micro-tilt, springing out to the left on
-   title hover — like a bracket fungus tiering up a trunk. */
+/* Turkey tail shelf: rooted on the letter at its left contact point, a vertical
+   breathing flex with a tiny micro-tilt, springing out to the right on title
+   hover — like a bracket fungus tiering up a trunk. */
 @keyframes fungus-shelf-flex {
   0%,
   100% {
@@ -412,14 +412,14 @@
 }
 
 .fungus-shelf {
-  transform-origin: center right;
+  transform-origin: center left;
   animation: fungus-shelf-flex 3.5s ease-in-out infinite;
   transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .jungle-title-word:hover .fungus-shelf {
   animation: none;
-  transform: translateX(-4px) scale(1.1);
+  transform: translateX(4px) scale(1.1);
 }
 
 @keyframes fungus-spore {
