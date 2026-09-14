@@ -122,24 +122,26 @@ export default function HomePage() {
       </section>
 
       {/* CTA */}
-      <section className="mx-auto max-w-6xl px-5 py-24 text-center">
-        <h2 className="mx-auto max-w-2xl font-serif text-4xl font-light leading-tight text-balance md:text-5xl">
-          Experience is the best teacher
-        </h2>
-        <p className="mx-auto mt-4 max-w-xl text-muted-foreground/85 text-pretty">
-          What are you willing to learn? Wander the full collection and feel the
-          true sensations that Nature has to offer.
-        </p>
-        <Link
-          href="/products"
-          className={cn(
-            buttonVariants({ size: 'lg' }),
-            'mt-8 inline-flex gap-2 rounded-full',
-          )}
-        >
-          Explore the collection
-          <ArrowRight className="size-4" aria-hidden="true" />
-        </Link>
+      <section className="mx-auto max-w-6xl px-5 py-24">
+        <div className="rounded-2xl border border-emerald-800/40 bg-emerald-900/20 p-8 text-center backdrop-blur-sm sm:p-12 dark:bg-emerald-950/60">
+          <h2 className="mx-auto max-w-3xl font-black uppercase text-4xl leading-none tracking-tight text-balance text-emerald-950 sm:text-5xl md:text-6xl dark:text-emerald-100">
+            Experience is the best teacher
+          </h2>
+          <p className="mx-auto mt-6 max-w-xl text-muted-foreground/85 text-pretty">
+            What are you willing to learn? Wander the full collection and feel
+            the true sensations that Nature has to offer.
+          </p>
+          <Link
+            href="/products"
+            className={cn(
+              buttonVariants({ size: 'lg' }),
+              'mt-8 inline-flex gap-2 rounded-full',
+            )}
+          >
+            Explore the collection
+            <ArrowRight className="size-4" aria-hidden="true" />
+          </Link>
+        </div>
       </section>
     </main>
   )
