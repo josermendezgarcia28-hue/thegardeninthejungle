@@ -46,13 +46,14 @@ export function ReishiMushroom({ className }: { className?: string }) {
   )
 }
 
-// Cordyceps militaris — slender glowing club sprout on "Garden" that sways.
+// Cordyceps militaris — slender glowing club that stands in as the dot of the
+// dotless "ı" in "in", swaying gently from its planted base.
 export function CordycepsSprout({ className }: { className?: string }) {
   return (
     <span
       aria-hidden="true"
       className={cn(
-        'hero-fungus pointer-events-none absolute -top-4 left-1/2 z-10 block h-6 w-3 -translate-x-1/2 drop-shadow-sm sm:-top-6 sm:h-9 sm:w-5',
+        'hero-fungus pointer-events-none absolute -top-3 left-[24%] z-10 block h-6 w-3 -translate-x-1/2 drop-shadow-sm sm:-top-5 sm:h-9 sm:w-5',
         className,
       )}
     >
@@ -130,18 +131,18 @@ export function LionsManeFungus({ className }: { className?: string }) {
   )
 }
 
-// Turkey Tail (Trametes versicolor) — layered concentric fan tucked at the
-// baseline of "Jungle".
+// Turkey Tail (Trametes versicolor) — layered concentric fan sprouting from the
+// right curve of the "e" in "Jungle" like a bracket shelf on jungle bark.
 export function TurkeyTailBracket({ className }: { className?: string }) {
   return (
     <span
       aria-hidden="true"
       className={cn(
-        'hero-fungus pointer-events-none absolute -bottom-2 -right-3 z-10 block h-4 w-5 drop-shadow-md sm:-bottom-3 sm:-right-5 sm:h-7 sm:w-8',
+        'hero-fungus pointer-events-none absolute top-[30%] -right-3 z-10 block h-4 w-5 drop-shadow-md sm:-right-4 sm:h-7 sm:w-8',
         className,
       )}
     >
-      <span className="block h-full w-full">
+      <span className="block h-full w-full origin-left rotate-[8deg]">
         <svg viewBox="0 0 36 28" fill="none" className="h-full w-full">
           <path d="M2 26 C2 10, 34 10, 34 26 Z" fill="#292524" />
           <path d="M5 26 C5 13, 31 13, 31 26 Z" fill="#065f46" />
