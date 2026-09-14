@@ -145,18 +145,49 @@ export const products: Product[] = [
   },
   {
     slug: 'shilajit',
-    name: 'Scalar-Infused Shilajit',
-    tagline: 'For exceptional wellbeing',
+    name: 'Shilajit',
+    tagline: 'Conqueror of Mountains, Destroyer of Weakness',
     category: 'Mineral Tonics',
     image: '/images/product-shilajit.png',
+    gallery: [
+      {
+        src: 'https://upload.wikimedia.org/wikipedia/commons/7/7d/Shilajit%2C_Mohave_Lava_Tube%2C_2018.04.01_%2835%29.jpg',
+        caption:
+          'High-Altitude Mineral Pitch — Raw biomass seeping from pristine rock strata',
+      },
+      {
+        src: 'https://upload.wikimedia.org/wikipedia/commons/2/25/Altai_Mumijo_Dissolved_in_Water.jpg',
+        caption:
+          'Pure Fulvic Acid Solution — Sun-purified resin dissolving in spring water',
+      },
+      {
+        src: 'https://cdn.shopify.com/s/files/1/0603/7294/3008/files/IMG_8347.jpg?v=1704235371',
+        caption:
+          'Vibe MedX Authentic Shilajit Resin (50 Grams in Biophotonic Glass)',
+      },
+      {
+        src: 'https://cdn.shopify.com/s/files/1/0603/7294/3008/files/55.png?v=1723672928',
+        caption: 'Vibe MedX Cold-Pressed Pure Shilajit Tablets',
+      },
+      {
+        src: 'https://cdn.shopify.com/s/files/1/0603/7294/3008/files/IMG_8345.jpg?v=1704235322',
+        caption:
+          'Vibe MedX Shilajit Resin (100 Grams High-Potency Reserve)',
+      },
+      {
+        src: 'https://cdn.shopify.com/s/files/1/0603/7294/3008/files/5AC2E861-78FE-4E38-BBB5-B6D7073281B4.png?v=1709073316',
+        caption: 'Vibe MedX Pure Shilajit Extract Powder (1 Kilo)',
+      },
+    ],
+    galleryBadge: 'Earth to Mineral',
     description:
       'A sticky, tar-like resin formed over millions of years in high mountain elevations. Records of its use stretch back more than five thousand years.',
     benefits: [
-      'Supports all-day energy via mitochondrial ATP production',
-      'Encourages healthy collagen for skin, bones and joints',
-      'Supports nitric oxide synthesis and circulatory health',
+      'Over 84 ionic trace minerals and high-percentage fulvic acid',
+      'Supports cellular mitochondrial energy, ATP synthesis, and nutrient absorption',
+      'Ethically wild-harvested and purified at low temperatures without chemical solvents',
     ],
-    affiliateUrl: 'https://example.com/affiliate/shilajit',
+    affiliateUrl: 'https://shop.vibemedx.com/jose',
   },
   {
     slug: 'crystal-lenses',
