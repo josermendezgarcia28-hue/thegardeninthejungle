@@ -84,7 +84,7 @@ export const products: Product[] = [
         title: "Lion's Mane — Brain & Cognitive Vitality",
         subtext:
           'Hot-water extracted organic fruiting body rich in hericenones for memory, focus, and nerve growth factor support.',
-        href: 'https://realmushrooms.com/products/organic-lions-mane-extract-capsules',
+        href: 'https://realmushrooms.com/?ref=182',
       },
       {
         src: 'https://realmushrooms.com/cdn/shop/files/Reishi-90_hide-ca.png?v=1772562784',
@@ -92,7 +92,7 @@ export const products: Product[] = [
         title: 'Red Reishi — The Mushroom of Immortality',
         subtext:
           'Ancient adaptogen containing triterpenes and beta-glucans to regulate stress, calm the spirit, and support restorative sleep.',
-        href: 'https://realmushrooms.com/products/reishi-mushroom-capsules',
+        href: 'https://realmushrooms.com/?ref=182',
       },
       {
         src: 'https://realmushrooms.com/cdn/shop/files/Cordyceps-120_hide-ca.png?v=1772220014',
@@ -100,7 +100,7 @@ export const products: Product[] = [
         title: 'Cordyceps-M — Physical Energy & Stamina',
         subtext:
           'Cultivated fruiting bodies rich in cordycepin to optimize oxygen consumption, endurance, and cellular ATP production.',
-        href: 'https://realmushrooms.com/products/organic-cordyceps-extract-capsules',
+        href: 'https://realmushrooms.com/?ref=182',
       },
       {
         src: 'https://realmushrooms.com/cdn/shop/files/Turkey-Tail-90_hide-ca.png?v=1772558592',
@@ -108,7 +108,7 @@ export const products: Product[] = [
         title: 'Turkey Tail — Gut & Immune Defense',
         subtext:
           'Potent source of polysaccharopeptides (PSK and PSP) and prebiotic beta-glucans for a resilient microbiome.',
-        href: 'https://realmushrooms.com/products/organic-turkey-tail-extract-capsules',
+        href: 'https://realmushrooms.com/?ref=182',
       },
       {
         src: 'https://realmushrooms.com/cdn/shop/files/chaga-120_hide-ca.png?v=1772218885',
@@ -116,7 +116,7 @@ export const products: Product[] = [
         title: 'Chaga — King of Forest Antioxidants',
         subtext:
           'Wild-harvested birch conk extract loaded with betulinic acid and polyphenols for cellular health and gastrointestinal resilience.',
-        href: 'https://realmushrooms.com/products/organic-chaga-mushroom-extract-capsules',
+        href: 'https://realmushrooms.com/?ref=182',
       },
       {
         src: 'https://realmushrooms.com/cdn/shop/files/Tremella-120_hide-ca.png?v=1772561064',
@@ -124,7 +124,7 @@ export const products: Product[] = [
         title: 'Tremella — Hydration & Cellular Beauty',
         subtext:
           'Snow fungus polysaccharide extract holding 500x its weight in water, promoting youthfulness and skin moisture.',
-        href: 'https://realmushrooms.com/products/organic-tremella-extract-capsules',
+        href: 'https://realmushrooms.com/?ref=182',
       },
       {
         src: 'https://realmushrooms.com/cdn/shop/files/5-Defenders-90_hide-ca.png?v=1772562898',
@@ -132,7 +132,7 @@ export const products: Product[] = [
         title: '5 Defenders — Synergy Immune Shield',
         subtext:
           'Concentrated blend of Reishi, Shiitake, Maitake, Turkey Tail, and Chaga fruiting bodies for comprehensive defense.',
-        href: 'https://realmushrooms.com/products/organic-mushroom-blend-capsules',
+        href: 'https://realmushrooms.com/?ref=182',
       },
     ],
     galleryBadge: 'Species',
@@ -143,7 +143,7 @@ export const products: Product[] = [
       'Guaranteed active beta-glucans with zero grain mycelium or added starch',
       'Award-winning purity for cognitive vitality, nerve support, and immune resilience',
     ],
-    affiliateUrl: 'https://realmushrooms.com/collections/best-sellers',
+    affiliateUrl: 'https://realmushrooms.com/?ref=182',
   },
   {
     slug: 'shilajit',
