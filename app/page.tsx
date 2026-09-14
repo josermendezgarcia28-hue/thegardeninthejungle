@@ -2,6 +2,12 @@ import Link from 'next/link'
 import { ArrowRight, Leaf, HeartPulse, Sparkles } from 'lucide-react'
 import { buttonVariants } from '@/components/ui/button'
 import { AnimatedTitle } from '@/components/animated-title'
+import {
+  ReishiMushroom,
+  CordycepsSprout,
+  LionsManeFungus,
+  TurkeyTailBracket,
+} from '@/components/hero-fungi'
 import { ExperienceCta } from '@/components/experience-cta'
 import { ProductCard } from '@/components/product-card'
 import { products } from '@/lib/products'
@@ -23,6 +29,16 @@ export default function HomePage() {
             <AnimatedTitle
               text="The Garden in the Jungle"
               className="mt-6 font-display text-4xl leading-[1.15] sm:text-5xl md:text-6xl"
+              decorations={{
+                0: <ReishiMushroom />,
+                1: <CordycepsSprout />,
+                4: (
+                  <>
+                    <LionsManeFungus />
+                    <TurkeyTailBracket />
+                  </>
+                ),
+              }}
             />
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-foreground/85 text-pretty">
               A place where plants and people come together. Explore the most
