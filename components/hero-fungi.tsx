@@ -131,19 +131,22 @@ export function LionsManeFungus({ className }: { className?: string }) {
   )
 }
 
-// Turkey Tail (Trametes versicolor) — layered concentric fan sprouting from the
-// right curve of the "e" in "Jungle" like a bracket shelf on jungle bark.
+// Turkey Tail (Trametes versicolor) — layered concentric fan gripping the left
+// wall of the "l" in "Jungle" and shelving out toward the "g" like bracket
+// fungus on a tree trunk.
 export function TurkeyTailBracket({ className }: { className?: string }) {
   return (
     <span
       aria-hidden="true"
       className={cn(
-        'hero-fungus pointer-events-none absolute top-[30%] -right-3 z-10 block h-4 w-5 drop-shadow-md sm:-right-4 sm:h-7 sm:w-8',
+        'pointer-events-none absolute top-[35%] right-[18%] z-10 block h-4 w-5 drop-shadow-md sm:right-[19%] sm:h-7 sm:w-8',
         className,
       )}
     >
-      <span className="block h-full w-full origin-left rotate-[8deg]">
-        <svg viewBox="0 0 36 28" fill="none" className="h-full w-full">
+      <span className="fungus-shelf block h-full w-full">
+        {/* Mirrored so the root grips the letter on the right and the rings
+            fan out to the left. */}
+        <svg viewBox="0 0 36 28" fill="none" className="h-full w-full -scale-x-100">
           <path d="M2 26 C2 10, 34 10, 34 26 Z" fill="#292524" />
           <path d="M5 26 C5 13, 31 13, 31 26 Z" fill="#065f46" />
           <path d="M9 26 C9 16, 27 16, 27 26 Z" fill="#d97706" />
