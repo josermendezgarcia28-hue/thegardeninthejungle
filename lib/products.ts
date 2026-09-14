@@ -69,7 +69,8 @@ export const products: Product[] = [
       'Rich in theobromine, magnesium and mood-elevating anandamide',
       'Single-origin, ethically sourced from family-run agroforestry in Guatemala',
     ],
-    affiliateUrl: 'https://www.mayamooncacao.com/collections/fresh-ground-cacao',
+    affiliateUrl: 'https://www.flykakao.com/?ref=jose',
+    promoCode: 'JOSE',
   },
   {
     slug: 'mushrooms',
