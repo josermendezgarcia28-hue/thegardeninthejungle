@@ -31,7 +31,7 @@ export default function HomePage() {
               className="mt-6 font-display text-4xl leading-[1.15] sm:text-5xl md:text-6xl"
               decorations={{
                 0: <ReishiMushroom />,
-                1: <CordycepsSprout />,
+                2: <CordycepsSprout />,
                 4: (
                   <>
                     <LionsManeFungus />
@@ -39,6 +39,7 @@ export default function HomePage() {
                   </>
                 ),
               }}
+              wordOverrides={{ 2: 'ın' }}
             />
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-foreground/85 text-pretty">
               A place where plants and people come together. Explore the most
