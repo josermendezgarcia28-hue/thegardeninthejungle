@@ -156,9 +156,8 @@ export const products: Product[] = [
           'High-Altitude Mineral Pitch — Raw biomass seeping from pristine rock strata',
       },
       {
-        src: 'https://upload.wikimedia.org/wikipedia/commons/2/25/Altai_Mumijo_Dissolved_in_Water.jpg',
-        caption:
-          'Pure Fulvic Acid Solution — Sun-purified resin dissolving in spring water',
+        src: 'https://cdn.shopify.com/s/files/1/0603/7294/3008/files/IMG_8345.jpg',
+        caption: 'VibeMedX Shilajit Resin 100g',
       },
       {
         src: 'https://cdn.shopify.com/s/files/1/0603/7294/3008/files/IMG_8347.jpg?v=1704235371',
