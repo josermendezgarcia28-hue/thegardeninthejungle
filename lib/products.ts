@@ -37,7 +37,7 @@ export const products: Product[] = [
     image: '/images/product-cacao.png',
     gallery: [
       {
-        src: 'https://upload.wikimedia.org/wikipedia/commons/e/e0/Cocoa_Pods.JPG',
+        src: '/images/cacao-pods-tree.png',
         caption: 'Theobroma Cacao — Ripe pods growing on the tree trunk',
       },
       {
@@ -79,6 +79,14 @@ export const products: Product[] = [
     category: 'Medicinal Mushrooms',
     image: '/images/product-mushrooms.png',
     gallery: [
+      {
+        src: '/images/mushroom-fruiting-bodies.png',
+        badge: 'Fruiting Bodies',
+        title: 'Whole Fruiting Bodies — Beta-Glucan Synergy',
+        subtext:
+          'Reishi, Chaga, Cordyceps and Turkey Tail in their true fruiting form — hot-water extracted for guaranteed active beta-glucans that work in synergy across immunity, energy and cognition.',
+        href: 'https://realmushrooms.com/?ref=182',
+      },
       {
         src: 'https://realmushrooms.com/cdn/shop/files/Lions-Mane-120_hide-ca.png?v=1768368372',
         badge: "Lion's Mane",
