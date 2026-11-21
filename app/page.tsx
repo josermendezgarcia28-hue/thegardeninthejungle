@@ -9,11 +9,14 @@ import {
 } from '@/components/hero-fungi'
 import { ExperienceCta } from '@/components/experience-cta'
 import { ProductCard } from '@/components/product-card'
+import { MushroomSafety } from '@/components/mushroom-safety'
 import { products } from '@/lib/products'
 import { cn } from '@/lib/utils'
 
 export default function HomePage() {
-  const featured = products.slice(0, 3)
+  const featured = products.filter((product) =>
+    ['cacao', 'shilajit'].includes(product.slug),
+  )
 
   return (
     <main>
@@ -124,13 +127,15 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 grid gap-6 sm:grid-cols-2">
             {featured.map((product) => (
               <ProductCard key={product.slug} product={product} />
             ))}
           </div>
         </div>
       </section>
+
+      <MushroomSafety />
 
       {/* CTA */}
       <ExperienceCta />
