@@ -3,7 +3,13 @@
 import { useEffect, useRef } from 'react'
 import { cn } from '@/lib/utils'
 
-type Ridge = { heights: number[]; alpha: number; width: number }
+type Ridge = {
+  heights: number[]
+  alpha: number
+  width: number
+  fillTop: string
+  fillBottom: string
+}
 type Nodule = {
   x: number
   y: number
@@ -63,20 +69,45 @@ function heightAt(ridge: Ridge, x: number) {
 function shapeRange() {
   const random = createRandom(7741)
   const layers = [
-    { baseline: 0.42, amplitude: 0.3, roughness: 0.56, alpha: 0.22, width: 0.8 },
-    { baseline: 0.58, amplitude: 0.3, roughness: 0.54, alpha: 0.34, width: 1 },
-    { baseline: 0.74, amplitude: 0.28, roughness: 0.52, alpha: 0.5, width: 1.3 },
-    { baseline: 0.9, amplitude: 0.26, roughness: 0.5, alpha: 0.72, width: 1.7 },
+    {
+      baseline: 0.5,
+      amplitude: 0.36,
+      roughness: 0.56,
+      alpha: 0.7,
+      width: 2,
+      fillTop: 'rgba(92,60,36,0.55)',
+      fillBottom: 'rgba(22,18,16,0.96)',
+    },
+    {
+      baseline: 0.7,
+      amplitude: 0.32,
+      roughness: 0.53,
+      alpha: 0.8,
+      width: 2.75,
+      fillTop: 'rgba(74,46,26,0.8)',
+      fillBottom: 'rgba(16,13,12,0.98)',
+    },
+    {
+      baseline: 0.92,
+      amplitude: 0.28,
+      roughness: 0.5,
+      alpha: 0.9,
+      width: 3.5,
+      fillTop: 'rgba(58,34,18,0.95)',
+      fillBottom: 'rgba(8,7,7,1)',
+    },
   ]
   const ridges: Ridge[] = layers.map((layer) => ({
     heights: buildRidge(random, layer.baseline, layer.amplitude, layer.roughness),
     alpha: layer.alpha,
     width: layer.width,
+    fillTop: layer.fillTop,
+    fillBottom: layer.fillBottom,
   }))
 
   const nodules: Nodule[] = []
   ridges.forEach((ridge, layerIndex) => {
-    const count = 2 + layerIndex
+    const count = 3 + layerIndex
     for (let n = 0; n < count; n++) {
       const x = 0.06 + ((n + random() * 0.8) / count) * 0.88
       const y = heightAt(ridge, x) + 0.004
@@ -88,7 +119,7 @@ function shapeRange() {
       nodules.push({
         x,
         y,
-        size: 0.55 + layerIndex * 0.18 + random() * 0.2,
+        size: 0.8 + layerIndex * 0.25 + random() * 0.25,
         phase: random() * Math.PI * 2,
         speed: 0.0006 + random() * 0.0006,
         shape: Array.from({ length: vertices }, () => 0.7 + random() * 0.35),
@@ -107,8 +138,9 @@ function createGlowSprite() {
   const ctx = sprite.getContext('2d')
   if (!ctx) return sprite
   const gradient = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2)
-  gradient.addColorStop(0, `rgba(${AMBER},0.75)`)
-  gradient.addColorStop(0.35, `rgba(${AMBER},0.22)`)
+  gradient.addColorStop(0, `rgba(${AMBER},0.95)`)
+  gradient.addColorStop(0.3, `rgba(${AMBER},0.4)`)
+  gradient.addColorStop(0.6, `rgba(${AMBER},0.1)`)
   gradient.addColorStop(1, `rgba(${AMBER},0)`)
   ctx.fillStyle = gradient
   ctx.fillRect(0, 0, size, size)
@@ -153,23 +185,53 @@ export function MountainRidgeCanvas({ className }: { className?: string }) {
       rangeCtx.lineJoin = 'round'
       rangeCtx.lineCap = 'round'
 
+      rangeCtx.fillStyle = `rgb(${VOID})`
+      rangeCtx.fillRect(0, 0, width, height)
+
+      const farthest = ridges[0]
+      const peakY = Math.min(...farthest.heights)
+      const horizonTop = Math.max(0, (peakY - 0.12) * height)
+      const horizon = rangeCtx.createLinearGradient(0, horizonTop, 0, height * 0.75)
+      horizon.addColorStop(0, `rgba(${AMBER},0)`)
+      horizon.addColorStop(0.55, `rgba(${AMBER},0.12)`)
+      horizon.addColorStop(1, `rgba(${BROWN},0.2)`)
+      rangeCtx.fillStyle = horizon
+      rangeCtx.fillRect(0, horizonTop, width, height - horizonTop)
+
+      const peakIndex = farthest.heights.indexOf(peakY)
+      const peakX = (peakIndex / SAMPLES) * width
+      const glowRadius = Math.max(width, height) * 0.45
+      const backGlow = rangeCtx.createRadialGradient(peakX, peakY * height, 0, peakX, peakY * height, glowRadius)
+      backGlow.addColorStop(0, `rgba(${AMBER},0.32)`)
+      backGlow.addColorStop(0.35, `rgba(${AMBER},0.12)`)
+      backGlow.addColorStop(1, `rgba(${AMBER},0)`)
+      rangeCtx.fillStyle = backGlow
+      rangeCtx.fillRect(0, 0, width, height)
+
       for (const ridge of ridges) {
+        const top = Math.min(...ridge.heights) * height
         traceRidge(rangeCtx, ridge)
         rangeCtx.lineTo(width, height)
         rangeCtx.lineTo(0, height)
         rangeCtx.closePath()
-        rangeCtx.fillStyle = `rgba(${VOID},0.94)`
+        const mass = rangeCtx.createLinearGradient(0, top, 0, height)
+        mass.addColorStop(0, ridge.fillTop)
+        mass.addColorStop(0.55, ridge.fillBottom)
+        mass.addColorStop(1, ridge.fillBottom)
+        rangeCtx.fillStyle = `rgb(${VOID})`
+        rangeCtx.fill()
+        rangeCtx.fillStyle = mass
         rangeCtx.fill()
 
         for (let strata = 1; strata <= 3; strata++) {
-          traceRidge(rangeCtx, ridge, strata * 0.018)
-          rangeCtx.strokeStyle = `rgba(${BROWN},${ridge.alpha * (0.32 - strata * 0.07)})`
-          rangeCtx.lineWidth = ridge.width * 0.6
+          traceRidge(rangeCtx, ridge, strata * 0.022)
+          rangeCtx.strokeStyle = `rgba(${BROWN},${ridge.alpha * (0.4 - strata * 0.09)})`
+          rangeCtx.lineWidth = ridge.width * 0.45
           rangeCtx.stroke()
         }
 
         traceRidge(rangeCtx, ridge)
-        rangeCtx.strokeStyle = `rgba(${BROWN},${ridge.alpha * 0.3})`
+        rangeCtx.strokeStyle = `rgba(${AMBER},${ridge.alpha * 0.18})`
         rangeCtx.lineWidth = ridge.width * 4
         rangeCtx.stroke()
         rangeCtx.strokeStyle = `rgba(${BROWN},${ridge.alpha})`
@@ -181,12 +243,12 @@ export function MountainRidgeCanvas({ className }: { className?: string }) {
     const drawNodule = (nodule: Nodule, time: number) => {
       const breath = reducedMotion ? 0.5 : (Math.sin(time * nodule.speed + nodule.phase) + 1) / 2
       const unit = Math.min(width, 900) / 900
-      const radius = (6 + breath * 1.6) * nodule.size * Math.max(0.7, unit * 1.4)
+      const radius = (8 + breath * 2.4) * nodule.size * Math.max(0.8, unit * 1.4)
       const x = nodule.x * width
       const y = nodule.y * height - radius * 0.4
 
-      const halo = radius * (4 + breath * 3)
-      ctx.globalAlpha = 0.35 + breath * 0.55
+      const halo = radius * (5 + breath * 4)
+      ctx.globalAlpha = 0.55 + breath * 0.45
       ctx.drawImage(glow, x - halo, y - halo, halo * 2, halo * 2)
       ctx.globalAlpha = 1
 
@@ -200,12 +262,13 @@ export function MountainRidgeCanvas({ className }: { className?: string }) {
       })
       ctx.closePath()
       const fill = ctx.createRadialGradient(x - radius * 0.3, y - radius * 0.4, 0, x, y, radius * 1.2)
-      fill.addColorStop(0, `rgba(${AMBER},${0.55 + breath * 0.35})`)
+      fill.addColorStop(0, `rgba(255,214,140,${0.75 + breath * 0.25})`)
+      fill.addColorStop(0.5, `rgba(${AMBER},${0.6 + breath * 0.3})`)
       fill.addColorStop(1, 'rgba(46,26,12,0.95)')
       ctx.fillStyle = fill
       ctx.fill()
-      ctx.strokeStyle = `rgba(${AMBER},${0.4 + breath * 0.4})`
-      ctx.lineWidth = 0.8
+      ctx.strokeStyle = `rgba(${AMBER},${0.6 + breath * 0.4})`
+      ctx.lineWidth = 1.2
       ctx.stroke()
     }
 
