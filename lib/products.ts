@@ -41,8 +41,8 @@ export const products: Product[] = [
         caption: 'Theobroma Cacao — Ripe pods growing on the tree trunk',
       },
       {
-        src: 'https://upload.wikimedia.org/wikipedia/commons/d/d1/Cacao_Beans_Drying.JPG',
-        caption: 'Traditional sun-drying and fermentation of harvested beans',
+        src: 'https://www.mayamooncacao.com/cdn/shop/files/ceremonial-cacao-gift-box-valentines-day-reconciliation-ritual-handmade-clay-copalera-molinillo-maya-moon_jpg.jpg?v=1785970737&width=800',
+        caption: 'Sacred Heart Ceremonial Cacao Ritual Kit with Handmade Clay Copalera and Molinillo',
       },
       {
         src: 'https://upload.wikimedia.org/wikipedia/commons/e/e4/Cocoa_bean_roasted2.jpg',
@@ -53,12 +53,12 @@ export const products: Product[] = [
         caption: 'Mayan Organic Ceremonial Cacao (1 Lb Fresh Ground)',
       },
       {
-        src: 'https://www.mayamooncacao.com/cdn/shop/files/Mayan_organic_ceremonial_Cacao_Powder_0.5_Lb_Fresh_Ground_-_Maya_Moon_Cacao-2576943.png?v=1785969169&width=800',
-        caption: 'Mayan Organic Ceremonial Cacao (0.5 Lb Fresh Ground)',
+        src: 'https://www.mayamooncacao.com/cdn/shop/files/maya-moon-cacao-ceremonial-grade-top-view-wooden-table-cacao-block.jpg?v=1785970414&width=800',
+        caption: 'Mayan Organic Ceremonial Cacao (1 Lb Pure Block)',
       },
       {
-        src: 'https://www.mayamooncacao.com/cdn/shop/files/mood-enhancing-cacao-nibs-snack-ritual-use-guatemala.png?v=1785970485&width=800',
-        caption: 'Fire-Roasted, Stone-Ground Cacao Nibs from Guatemala',
+  src: 'https://www.mayamooncacao.com/cdn/shop/files/Maya_Moon_-_cacao_Cup_-_Maya_Moon_Cacao-2576921.png?v=1785969074&width=1024',
+  caption: 'Artisan Clay Cacao Ceremonial Cup – Hand-Painted, Handle-Free, 12 oz',
       },
     ],
     galleryBadge: 'Tree to Cup',
