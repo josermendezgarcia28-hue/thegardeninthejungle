@@ -9,6 +9,7 @@ import {
 } from '@/components/hero-fungi'
 import { ExperienceCta } from '@/components/experience-cta'
 import { ProductCard } from '@/components/product-card'
+import { CacaoSafety } from '@/components/cacao-safety'
 import { MushroomSafety } from '@/components/mushroom-safety'
 import { ShilajitSafety } from '@/components/shilajit-safety'
 import { products } from '@/lib/products'
@@ -102,37 +103,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Featured products */}
-      <section className="border-y border-primary/15 bg-secondary/20 backdrop-blur-md">
-        <div className="mx-auto max-w-6xl px-5 py-20">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <div className="max-w-xl">
-              <p className="eyebrow">Freshly picked</p>
-              <h2 className="section-heading mt-2">From the garden</h2>
-              <p className="mt-3 text-muted-foreground/85">
-                Foods so well made by nature they are more than a supplement.
-                Reveal a link whenever you&apos;re ready to explore.
-              </p>
-            </div>
-            <Link
-              href="/products"
-              className={cn(
-                buttonVariants({ variant: 'ghost' }),
-                'gap-2 text-primary',
-              )}
-            >
-              See all
-              <ArrowRight className="size-4" aria-hidden="true" />
-            </Link>
-          </div>
-
-          <div className="mt-10 grid max-w-2xl gap-6">
-            {featured.map((product) => (
-              <ProductCard key={product.slug} product={product} />
-            ))}
-          </div>
-        </div>
-      </section>
+      <CacaoSafety featured={featured} />
 
 <ShilajitSafety />
 

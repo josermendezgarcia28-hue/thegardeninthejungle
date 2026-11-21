@@ -49,6 +49,12 @@
   --color-fungi-glow: oklch(0.68 0.19 32);
   --color-resin-amber: oklch(0.78 0.14 75);
   --color-resin-deep: oklch(0.34 0.07 60);
+  --color-neon-void: #050505;
+  --color-neon-emerald: #00ff88;
+  --color-neon-green: #10b981;
+  --color-neon-amber: #ffaa00;
+  --color-neon-gold: #ffd700;
+  --color-neon-flare: #ff7700;
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
