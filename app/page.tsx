@@ -10,13 +10,12 @@ import {
 import { ExperienceCta } from '@/components/experience-cta'
 import { ProductCard } from '@/components/product-card'
 import { MushroomSafety } from '@/components/mushroom-safety'
+import { ShilajitSafety } from '@/components/shilajit-safety'
 import { products } from '@/lib/products'
 import { cn } from '@/lib/utils'
 
 export default function HomePage() {
-  const featured = products.filter((product) =>
-    ['cacao', 'shilajit'].includes(product.slug),
-  )
+  const featured = products.filter((product) => product.slug === 'cacao')
 
   return (
     <main>
@@ -127,7 +126,7 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <div className="mt-10 grid gap-6 sm:grid-cols-2">
+          <div className="mt-10 grid max-w-2xl gap-6">
             {featured.map((product) => (
               <ProductCard key={product.slug} product={product} />
             ))}
@@ -135,7 +134,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      <MushroomSafety />
+<ShilajitSafety />
+
+<MushroomSafety />
 
       {/* CTA */}
       <ExperienceCta />
