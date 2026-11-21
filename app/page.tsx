@@ -36,8 +36,8 @@ export default function HomePage() {
               wordOverrides={{ 2: 'ın' }}
             />
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-foreground/85 text-pretty">
-              A place where plants and people come together. Explore the most
-              exotic substances on the planet — brought to you by trusted
+              A place where plants and people come together. Scavenge through
+              natural substances suitable for human health — brought to you by trusted
               affiliates — and awaken your genetic superpowers by tapping back
               into your roots.
             </p>
