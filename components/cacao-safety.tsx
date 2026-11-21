@@ -70,18 +70,18 @@ export function CacaoSafety({ featured }: { featured: Product[] }) {
   return (
     <section
       aria-labelledby="cacao-safety-heading"
-      className="relative isolate overflow-hidden border-t border-fungi-ink/10 bg-fungi-void text-fungi-ink"
+      className="relative isolate overflow-hidden border-t border-neon-emerald/15 bg-neon-void text-fungi-ink"
     >
       <CacaoCanopyCanvas className="-z-20 opacity-90 md:opacity-100" />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_left,var(--color-fungi-void)_5%,transparent_55%)] opacity-70"
+        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_left,var(--color-neon-void)_5%,transparent_55%)] opacity-70"
       />
 
       <div className="mx-auto flex max-w-6xl flex-col gap-12 px-5 py-20 md:py-24">
         <header className="flex flex-wrap items-end justify-between gap-6">
           <div className="flex max-w-2xl flex-col gap-4">
-            <span className="w-fit rounded-full border border-resin-amber/60 px-3 py-1 font-label text-xs uppercase tracking-[0.22em] text-fungi-ink shadow-[0_0_18px_-4px_var(--color-resin-amber)]">
+            <span className="w-fit rounded-full border border-neon-amber/60 px-3 py-1 font-label text-xs uppercase tracking-[0.22em] text-fungi-ink shadow-[0_0_18px_-4px_var(--color-neon-amber)]">
               From the garden &middot; Ceremonial cacao
             </span>
             <h2
@@ -98,7 +98,7 @@ export function CacaoSafety({ featured }: { featured: Product[] }) {
           </div>
           <Link
             href="/products"
-            className="flex items-center gap-2 rounded-full border border-fungi-ink/25 px-4 py-2 text-sm text-fungi-ink transition-colors hover:border-resin-amber/70 hover:text-resin-amber"
+            className="flex items-center gap-2 rounded-full border border-fungi-ink/25 px-4 py-2 text-sm text-fungi-ink transition-colors hover:border-neon-emerald/70 hover:text-neon-emerald"
           >
             See all
             <ArrowRight className="size-4" aria-hidden="true" />
@@ -109,14 +109,14 @@ export function CacaoSafety({ featured }: { featured: Product[] }) {
           {pillars.map((pillar) => (
             <li
               key={pillar.tag}
-              className="flex flex-col gap-5 rounded-2xl border border-fungi-ink/15 bg-fungi-void/65 p-7 text-fungi-ink shadow-[0_20px_60px_-30px_var(--color-fungi-void)] backdrop-blur-md md:bg-fungi-void/50 md:p-8"
+              className="flex flex-col gap-5 rounded-2xl border border-neon-emerald/25 bg-neon-void/75 p-7 text-fungi-ink shadow-[0_0_24px_-12px_var(--color-neon-emerald),inset_0_0_0_1px_color-mix(in_oklab,var(--color-neon-gold)_8%,transparent)] backdrop-blur-md md:bg-neon-void/65 md:p-8"
             >
               <div className="flex items-center justify-between gap-4">
-                <span className="rounded-full border border-fungi-ink/20 bg-fungi-forest px-3 py-1 font-label text-xs uppercase tracking-[0.18em] text-fungi-ink">
+                <span className="rounded-full border border-neon-emerald/40 bg-neon-void/60 px-3 py-1 font-label text-xs uppercase tracking-[0.18em] text-fungi-ink">
                   {pillar.tag}
                 </span>
-                <span className="flex size-10 items-center justify-center rounded-full bg-fungi-soil ring-1 ring-resin-amber/30">
-                  <pillar.icon className="size-5 text-resin-amber" aria-hidden="true" />
+                <span className="flex size-10 items-center justify-center rounded-full bg-neon-void ring-1 ring-neon-amber/50 shadow-[0_0_14px_-4px_var(--color-neon-amber)]">
+                  <pillar.icon className="size-5 text-neon-gold" aria-hidden="true" />
                 </span>
               </div>
 
@@ -125,7 +125,7 @@ export function CacaoSafety({ featured }: { featured: Product[] }) {
               </h3>
 
               <p className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                <span className="font-serif text-3xl text-resin-amber [text-shadow:0_0_22px_var(--color-resin-amber)]">
+                <span className="font-serif text-3xl text-neon-gold [text-shadow:0_0_12px_var(--color-neon-amber),0_0_28px_var(--color-neon-flare)]">
                   {pillar.metric}
                 </span>
                 <span className="text-sm leading-relaxed text-fungi-ink/75">
@@ -137,11 +137,11 @@ export function CacaoSafety({ featured }: { featured: Product[] }) {
                 {pillar.body}
               </p>
 
-              <ul className="mt-auto flex flex-col gap-2.5 border-t border-fungi-ink/15 pt-5">
+              <ul className="mt-auto flex flex-col gap-2.5 border-t border-neon-emerald/20 pt-5">
                 {pillar.points.map((point) => (
                   <li key={point} className="flex gap-3 leading-relaxed">
                     <span
-                      className="mt-[0.55em] size-1.5 shrink-0 rounded-full bg-resin-amber shadow-[0_0_8px_var(--color-resin-amber)]"
+                      className="mt-[0.55em] size-1.5 shrink-0 rounded-full bg-neon-emerald shadow-[0_0_8px_var(--color-neon-emerald)]"
                       aria-hidden="true"
                     />
                     <span>{point}</span>

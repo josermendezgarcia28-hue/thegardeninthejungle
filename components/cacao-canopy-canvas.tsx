@@ -28,12 +28,13 @@ type Leaf = {
 }
 
 const MAX_DPR = 1.5
-const BARK = '74,46,28'
-const BARK_EDGE = '128,84,50'
-const LEAF_DEEP = [12, 36, 22]
-const LEAF_LIGHT = [30, 74, 44]
-const AMBER = '232,172,84'
-const VOID = '4,4,4'
+const VOID = '5,5,5'
+const EMERALD = '0,255,136'
+const CYBER = '16,185,129'
+const AMBER = [255, 170, 0]
+const GOLD = [255, 215, 0]
+const FLARE = '255,119,0'
+const ULTRAVIOLET = '112,40,210'
 
 function createRandom(seed: number) {
   let state = seed
@@ -87,11 +88,11 @@ function growForest() {
       })
     }
   }
-  for (let i = 0; i < 26; i++) addCluster(random(), random() * 0.14, 9, 0.12)
+  for (let i = 0; i < 22; i++) addCluster(random(), random() * 0.14, 8, 0.12)
   for (const trunk of trunks) {
     for (const branch of trunk.branches) {
       const tipX = trunkX(trunk, branch.y) + branch.side * branch.reach
-      addCluster(tipX, branch.y - branch.lift, 10, 0.1)
+      addCluster(tipX, branch.y - branch.lift, 9, 0.1)
     }
   }
   leaves.sort((a, b) => a.shade - b.shade)
@@ -106,7 +107,7 @@ function growForest() {
         side: n % 2 === 0 ? 1 : -1,
         size: (trunk.depth === 1 ? 1 : 0.75) * (0.85 + random() * 0.3),
         phase: random() * Math.PI * 2,
-        speed: 0.0005 + random() * 0.0005,
+        speed: 0.0006 + random() * 0.0005,
       })
     }
   })
@@ -114,21 +115,22 @@ function growForest() {
   return { trunks, leaves, pods }
 }
 
-function createGlowSprite() {
-  const size = 96
+function createGlowSprite(rgb: string, stops: [number, number][]) {
+  const size = 128
   const sprite = document.createElement('canvas')
   sprite.width = size
   sprite.height = size
   const ctx = sprite.getContext('2d')
   if (!ctx) return sprite
   const gradient = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2)
-  gradient.addColorStop(0, `rgba(${AMBER},0.9)`)
-  gradient.addColorStop(0.3, `rgba(${AMBER},0.35)`)
-  gradient.addColorStop(0.65, `rgba(${AMBER},0.08)`)
-  gradient.addColorStop(1, `rgba(${AMBER},0)`)
+  for (const [offset, alpha] of stops) gradient.addColorStop(offset, `rgba(${rgb},${alpha})`)
   ctx.fillStyle = gradient
   ctx.fillRect(0, 0, size, size)
   return sprite
+}
+
+function mixRgb(from: number[], to: number[], t: number) {
+  return from.map((value, i) => Math.round(value + (to[i] - value) * t)).join(',')
 }
 
 export function CacaoCanopyCanvas({ className }: { className?: string }) {
@@ -140,7 +142,18 @@ export function CacaoCanopyCanvas({ className }: { className?: string }) {
     if (!canvas || !ctx) return
 
     const { trunks, leaves, pods } = growForest()
-    const glow = createGlowSprite()
+    const flareHalo = createGlowSprite(FLARE, [
+      [0, 0.55],
+      [0.35, 0.22],
+      [0.7, 0.06],
+      [1, 0],
+    ])
+    const amberHalo = createGlowSprite(AMBER.join(','), [
+      [0, 0.95],
+      [0.25, 0.5],
+      [0.6, 0.12],
+      [1, 0],
+    ])
     const forest = document.createElement('canvas')
     const forestCtx = forest.getContext('2d')
     if (!forestCtx) return
@@ -165,16 +178,31 @@ export function CacaoCanopyCanvas({ className }: { className?: string }) {
       f.fillStyle = `rgb(${VOID})`
       f.fillRect(0, 0, width, height)
 
-      const moon = f.createRadialGradient(width * 0.7, height * 0.1, 0, width * 0.7, height * 0.1, Math.max(width, height) * 0.6)
-      moon.addColorStop(0, 'rgba(40,70,52,0.35)')
-      moon.addColorStop(1, 'rgba(40,70,52,0)')
-      f.fillStyle = moon
-      f.fillRect(0, 0, width, height)
+      const reach = Math.max(width, height)
+      for (const [cx, cy, radius, alpha] of [
+        [0.72, 0.18, 0.65, 0.32],
+        [0.18, 0.4, 0.5, 0.2],
+      ]) {
+        const glow = f.createRadialGradient(width * cx, height * cy, 0, width * cx, height * cy, reach * radius)
+        glow.addColorStop(0, `rgba(${ULTRAVIOLET},${alpha})`)
+        glow.addColorStop(0.5, `rgba(${ULTRAVIOLET},${alpha * 0.35})`)
+        glow.addColorStop(1, `rgba(${ULTRAVIOLET},0)`)
+        f.fillStyle = glow
+        f.fillRect(0, 0, width, height)
+      }
+
+      const neonStroke = (rgb: string, alpha: number, lineWidth: number, blur: number) => {
+        f.strokeStyle = `rgba(${rgb},${alpha})`
+        f.lineWidth = lineWidth
+        f.shadowColor = `rgba(${rgb},${Math.min(1, alpha + 0.2)})`
+        f.shadowBlur = blur * dpr
+        f.stroke()
+      }
 
       for (const depth of [0, 1]) {
+        const alpha = depth === 1 ? 0.85 : 0.45
         for (const trunk of trunks) {
           if (trunk.depth !== depth) continue
-          const alpha = depth === 1 ? 1 : 0.55
 
           for (const branch of trunk.branches) {
             const sx = trunkX(trunk, branch.y) * width
@@ -184,9 +212,11 @@ export function CacaoCanopyCanvas({ className }: { className?: string }) {
             f.beginPath()
             f.moveTo(sx, sy)
             f.quadraticCurveTo((sx + ex) / 2, sy, ex, ey)
-            f.strokeStyle = `rgba(${BARK},${alpha})`
+            f.shadowBlur = 0
+            f.strokeStyle = 'rgba(22,12,4,0.95)'
             f.lineWidth = trunkWidth(trunk, branch.y) * 0.32
             f.stroke()
+            neonStroke(AMBER.join(','), alpha * 0.9, 1.4, 10)
           }
 
           const steps = 24
@@ -202,34 +232,56 @@ export function CacaoCanopyCanvas({ className }: { className?: string }) {
             f.lineTo(trunkX(trunk, y) * width + trunkWidth(trunk, y) / 2, y * height)
           }
           f.closePath()
-          f.fillStyle = `rgba(${BARK},${alpha})`
+          f.shadowBlur = 0
+          f.fillStyle = 'rgba(18,10,4,0.96)'
           f.fill()
-          f.strokeStyle = `rgba(${BARK_EDGE},${alpha * 0.55})`
-          f.lineWidth = 1.5
-          f.stroke()
+          neonStroke('190,110,30', alpha, 1.8, 14)
+
+          f.beginPath()
+          for (let s = 0; s <= steps; s++) {
+            const y = -0.05 + (s / steps) * 1.1
+            const x = trunkX(trunk, y) * width - trunkWidth(trunk, y) * 0.2
+            if (s === 0) f.moveTo(x, y * height)
+            else f.lineTo(x, y * height)
+          }
+          neonStroke(GOLD.join(','), alpha * 0.35, 0.8, 6)
         }
       }
 
       for (const leaf of leaves) {
-        const mix = (i: number) => Math.round(LEAF_DEEP[i] + (LEAF_LIGHT[i] - LEAF_DEEP[i]) * leaf.shade)
         const length = leaf.length * scale
+        const rgb = leaf.shade > 0.5 ? EMERALD : CYBER
+        const alpha = 0.45 + leaf.shade * 0.5
         f.save()
         f.translate(leaf.x * width, leaf.y * height)
         f.rotate(leaf.angle)
-        f.beginPath()
-        f.ellipse(0, 0, length / 2, length / 5, 0, 0, Math.PI * 2)
-        f.fillStyle = `rgba(${mix(0)},${mix(1)},${mix(2)},0.95)`
-        f.fill()
+
         f.beginPath()
         f.moveTo(-length / 2, 0)
-        f.lineTo(length / 2, 0)
-        f.strokeStyle = 'rgba(4,10,6,0.55)'
-        f.lineWidth = 1
-        f.stroke()
+        f.quadraticCurveTo(0, -length / 4, length / 2, 0)
+        f.quadraticCurveTo(0, length / 4, -length / 2, 0)
+        f.closePath()
+        f.shadowBlur = 0
+        f.fillStyle = 'rgba(2,18,11,0.88)'
+        f.fill()
+        neonStroke(rgb, alpha, 1.1, 8)
+
+        f.beginPath()
+        f.moveTo(-length / 2, 0)
+        f.lineTo(length * 0.42, 0)
+        for (const t of [-0.2, 0.05, 0.28]) {
+          const vx = t * length
+          f.moveTo(vx, 0)
+          f.lineTo(vx + length * 0.1, -length * 0.1)
+          f.moveTo(vx, 0)
+          f.lineTo(vx + length * 0.1, length * 0.1)
+        }
+        neonStroke(rgb, alpha * 0.6, 0.6, 4)
         f.restore()
       }
 
-      const floor = f.createLinearGradient(0, height * 0.7, 0, height)
+      f.shadowBlur = 0
+      const floor = f.createLinearGradient(0, height * 0.72, 0, height)
       floor.addColorStop(0, `rgba(${VOID},0)`)
       floor.addColorStop(1, `rgba(${VOID},0.85)`)
       f.fillStyle = floor
@@ -240,17 +292,23 @@ export function CacaoCanopyCanvas({ className }: { className?: string }) {
       const trunk = trunks[pod.trunk]
       const breath = reducedMotion ? 0.5 : (Math.sin(time * pod.speed + pod.phase) + 1) / 2
       const swing = reducedMotion ? 0 : Math.sin(time * pod.speed * 1.6 + pod.phase) * 0.07
+      const tone = mixRgb(AMBER, GOLD, breath)
       const ax = trunkX(trunk, pod.y) * width + pod.side * trunkWidth(trunk, pod.y) * 0.45
       const ay = pod.y * height
-      const s = pod.size * scale * (1 + breath * 0.07)
+      const s = pod.size * scale * (1 + breath * 0.08)
       const rx = 8 * s
       const ry = 18 * s
       const stem = 6 * s
+      const cy = ay + stem + ry
+      const depthAlpha = trunk.depth === 1 ? 1 : 0.65
 
-      const halo = ry * (3.2 + breath * 2)
-      ctx.globalAlpha = (trunk.depth === 1 ? 0.6 : 0.4) + breath * 0.4
-      ctx.drawImage(glow, ax - halo, ay + stem + ry - halo, halo * 2, halo * 2)
-      ctx.globalAlpha = 1
+      const outer = ry * (4 + breath * 2)
+      ctx.globalAlpha = depthAlpha * (0.45 + breath * 0.5)
+      ctx.drawImage(flareHalo, ax - outer, cy - outer, outer * 2, outer * 2)
+      const inner = ry * (1.9 + breath * 0.8)
+      ctx.globalAlpha = depthAlpha * (0.55 + breath * 0.45)
+      ctx.drawImage(amberHalo, ax - inner, cy - inner, inner * 2, inner * 2)
+      ctx.globalAlpha = depthAlpha
 
       ctx.save()
       ctx.translate(ax, ay)
@@ -259,28 +317,36 @@ export function CacaoCanopyCanvas({ className }: { className?: string }) {
       ctx.beginPath()
       ctx.moveTo(0, 0)
       ctx.lineTo(0, stem)
-      ctx.strokeStyle = `rgba(${BARK_EDGE},0.9)`
-      ctx.lineWidth = Math.max(1.5, 2.2 * s)
+      ctx.strokeStyle = `rgba(${tone},0.9)`
+      ctx.lineWidth = Math.max(1.2, 1.8 * s)
       ctx.stroke()
 
       ctx.translate(0, stem + ry)
       ctx.beginPath()
       ctx.ellipse(0, 0, rx, ry, 0, 0, Math.PI * 2)
-      const fill = ctx.createRadialGradient(-rx * 0.35, -ry * 0.3, 0, 0, 0, ry * 1.1)
-      fill.addColorStop(0, `rgba(255,218,140,${0.8 + breath * 0.2})`)
-      fill.addColorStop(0.5, `rgba(${AMBER},${0.65 + breath * 0.3})`)
-      fill.addColorStop(1, 'rgba(92,48,16,0.95)')
+      const fill = ctx.createRadialGradient(-rx * 0.3, -ry * 0.3, 0, 0, 0, ry * 1.1)
+      fill.addColorStop(0, `rgba(255,248,214,${0.85 + breath * 0.15})`)
+      fill.addColorStop(0.45, `rgba(${tone},${0.8 + breath * 0.2})`)
+      fill.addColorStop(1, `rgba(${FLARE},0.85)`)
       ctx.fillStyle = fill
       ctx.fill()
+      ctx.strokeStyle = `rgba(255,236,160,${0.6 + breath * 0.4})`
+      ctx.lineWidth = 1.2
+      ctx.stroke()
 
-      ctx.strokeStyle = `rgba(120,64,20,${0.45 + breath * 0.2})`
-      ctx.lineWidth = 1
-      for (const ridge of [-0.5, 0, 0.5]) {
+      ctx.strokeStyle = `rgba(${FLARE},${0.55 + breath * 0.3})`
+      ctx.lineWidth = 0.9
+      for (const ridge of [-0.5, 0.5]) {
         ctx.beginPath()
-        ctx.ellipse(0, 0, rx * Math.abs(ridge) || 0.5, ry * 0.92, 0, ridge < 0 ? Math.PI / 2 : -Math.PI / 2, ridge < 0 ? Math.PI * 1.5 : Math.PI / 2)
+        ctx.ellipse(0, 0, rx * Math.abs(ridge), ry * 0.92, 0, ridge < 0 ? Math.PI / 2 : -Math.PI / 2, ridge < 0 ? Math.PI * 1.5 : Math.PI / 2)
         ctx.stroke()
       }
+      ctx.beginPath()
+      ctx.moveTo(0, -ry * 0.92)
+      ctx.lineTo(0, ry * 0.92)
+      ctx.stroke()
       ctx.restore()
+      ctx.globalAlpha = 1
     }
 
     const draw = (time: number) => {
@@ -288,7 +354,9 @@ export function CacaoCanopyCanvas({ className }: { className?: string }) {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       ctx.drawImage(forest, 0, 0)
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+      ctx.globalCompositeOperation = 'lighter'
       for (const pod of pods) drawPod(pod, time)
+      ctx.globalCompositeOperation = 'source-over'
     }
 
     const resize = () => {
