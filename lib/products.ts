@@ -57,8 +57,8 @@ export const products: Product[] = [
         caption: 'Mayan Organic Ceremonial Cacao (1 Lb Pure Block)',
       },
       {
-        src: 'https://www.mayamooncacao.com/cdn/shop/files/mood-enhancing-cacao-nibs-snack-ritual-use-guatemala.png?v=1785970485&width=800',
-        caption: 'Fire-Roasted, Stone-Ground Cacao Nibs from Guatemala',
+  src: 'https://www.mayamooncacao.com/cdn/shop/files/Maya_Moon_-_cacao_Cup_-_Maya_Moon_Cacao-2576921.png?v=1785969074&width=1024',
+  caption: 'Artisan Clay Cacao Ceremonial Cup – Hand-Painted, Handle-Free, 12 oz',
       },
     ],
     galleryBadge: 'Tree to Cup',
