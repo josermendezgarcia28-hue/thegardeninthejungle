@@ -41,8 +41,8 @@ export const products: Product[] = [
         caption: 'Theobroma Cacao — Ripe pods growing on the tree trunk',
       },
       {
-        src: 'https://www.mayamooncacao.com/cdn/shop/files/sacred-heart-ceremonial-cacao-ritual-kit-valentines-day-love.jpg?v=1785970723&width=800',
-        caption: 'Sacred Heart Ceremonial Cacao Ritual Kit',
+        src: 'https://www.mayamooncacao.com/cdn/shop/files/ceremonial-cacao-gift-box-valentines-day-reconciliation-ritual-handmade-clay-copalera-molinillo-maya-moon_jpg.jpg?v=1785970737&width=800',
+        caption: 'Sacred Heart Ceremonial Cacao Ritual Kit with Handmade Clay Copalera and Molinillo',
       },
       {
         src: 'https://upload.wikimedia.org/wikipedia/commons/e/e4/Cocoa_bean_roasted2.jpg',
