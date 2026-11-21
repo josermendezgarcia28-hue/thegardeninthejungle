@@ -213,7 +213,7 @@ export const products: Product[] = [
       'A functional tool designed to shift perception',
       'A conscious reimagining of everyday eyewear',
     ],
-    affiliateUrl: 'https://example.com/affiliate/crystal-lenses',
+    affiliateUrl: 'https://mycrystallenses.com?sca_ref=6085737.wcO9ImTWKZ',
   },
 ]
 
