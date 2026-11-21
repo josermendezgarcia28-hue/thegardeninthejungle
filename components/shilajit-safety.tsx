@@ -70,10 +70,10 @@ export function ShilajitSafety() {
       aria-labelledby="shilajit-safety-heading"
       className="relative isolate overflow-hidden border-t border-fungi-ink/10 bg-fungi-void text-fungi-ink"
     >
-      <MountainRidgeCanvas className="-z-20 opacity-55 md:opacity-90" />
+      <MountainRidgeCanvas className="-z-20 opacity-90 md:opacity-100" />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,var(--color-fungi-void)_10%,transparent_75%)] opacity-80"
+        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_left,var(--color-fungi-void)_5%,transparent_55%)] opacity-70"
       />
 
       <div className="mx-auto flex max-w-6xl flex-col gap-12 px-5 py-20 md:py-24">
@@ -98,7 +98,7 @@ export function ShilajitSafety() {
           {pillars.map((pillar) => (
             <li
               key={pillar.tag}
-              className="flex flex-col gap-5 rounded-2xl border border-fungi-ink/15 bg-fungi-void/80 p-7 text-fungi-ink md:bg-fungi-void/55 md:p-8 md:backdrop-blur-md"
+              className="flex flex-col gap-5 rounded-2xl border border-fungi-ink/15 bg-resin-deep/60 p-7 text-fungi-ink shadow-[0_20px_60px_-30px_var(--color-fungi-void)] backdrop-blur-md md:bg-resin-deep/45 md:p-8"
             >
               <div className="flex items-center justify-between gap-4">
                 <span className="rounded-full border border-resin-amber/40 bg-resin-deep px-3 py-1 font-label text-xs uppercase tracking-[0.18em] text-fungi-ink">
