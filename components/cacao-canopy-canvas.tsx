@@ -20,18 +20,22 @@ type Leaf = { x: number; y: number; angle: number; size: number; depth: Depth }
 type Pod = {
   x: number
   y: number
-  angle: number
+  side: 1 | -1
   size: number
   depth: Depth
-  phase: number
-  speed: number
 }
+type Anchor = { x: number; y: number; depth: Depth; tree: number; onTrunk: boolean }
 type Scene = { segments: Segment[]; leaves: Leaf[]; pods: Pod[]; groundY: number }
 
 const MAX_DPR = 1.5
 const EMERALD = '0,255,136'
 const GOLD = '255,215,0'
 const AMBER = '255,170,0'
+const POD_TOP = '255,183,0'
+const POD_BOTTOM = '255,136,0'
+const POD_HALO_INNER = '255,170,0'
+const POD_HALO_OUTER = '255,102,0'
+const BREATH_PERIOD_MS = 3600
 const LAYER_ALPHA: Record<Depth, number> = { 0: 0.3, 1: 0.8 }
 const TREES: { x: number; depth: Depth; scale: number }[] = [
   { x: 0.16, depth: 1, scale: 1 },
@@ -51,7 +55,12 @@ function buildScene(width: number, height: number, unit: number): Scene {
   const random = createRandom(4219)
   const segments: Segment[] = []
   const leaves: Leaf[] = []
-  const anchors: { x: number; y: number; depth: Depth }[] = []
+  const anchors: Anchor[] = []
+  let treeIndex = 0
+  const pointOn = (x1: number, y1: number, cx: number, cy: number, x2: number, y2: number, t: number) => ({
+    x: (1 - t) * (1 - t) * x1 + 2 * (1 - t) * t * cx + t * t * x2,
+    y: (1 - t) * (1 - t) * y1 + 2 * (1 - t) * t * cy + t * t * y2,
+  })
   const groundY = height * 0.62
   const treeScale = Math.max(60, Math.min(width * 0.18, height * 0.17))
 
@@ -76,7 +85,10 @@ function buildScene(width: number, height: number, unit: number): Scene {
   const growBranch = (x: number, y: number, angle: number, length: number, level: number, depth: Depth) => {
     const lineWidth = Math.max(1.5, 2 - level * 0.12)
     const { x2, y2, cx, cy } = pushSegment(x, y, angle, length, lineWidth, 'branch', depth)
-    if (level >= 1 && level <= 3) anchors.push({ x: cx, y: cy, depth })
+    if (level === 1) {
+      const joint = pointOn(x, y, cx, cy, x2, y2, 0.3)
+      anchors.push({ ...joint, depth, tree: treeIndex, onTrunk: false })
+    }
     if (level >= 4) {
       const leafCount = 2 + Math.floor(random() * 2)
       for (let i = 0; i < leafCount; i++) {
@@ -111,17 +123,16 @@ function buildScene(width: number, height: number, unit: number): Scene {
     }
   }
 
-  for (const tree of TREES) {
+  for (const [index, tree] of TREES.entries()) {
+    treeIndex = index
     const baseX = tree.x * width
     const trunkLength = treeScale * tree.scale
     const lean = (random() - 0.5) * 0.12
     const trunk = pushSegment(baseX, groundY, -Math.PI / 2 + lean, trunkLength, 2, 'trunk', tree.depth)
-    anchors.push({ x: trunk.cx, y: trunk.cy, depth: tree.depth })
-    anchors.push({
-      x: (trunk.cx + trunk.x2) / 2,
-      y: (trunk.cy + trunk.y2) / 2,
-      depth: tree.depth,
-    })
+    for (const t of [0.22, 0.48, 0.72]) {
+      const point = pointOn(baseX, groundY, trunk.cx, trunk.cy, trunk.x2, trunk.y2, t)
+      anchors.push({ ...point, depth: tree.depth, tree: index, onTrunk: true })
+    }
     growBranch(trunk.x2, trunk.y2, -Math.PI / 2 - 0.5 + lean, trunkLength * 0.72, 1, tree.depth)
     growBranch(trunk.x2, trunk.y2, -Math.PI / 2 + 0.5 + lean, trunkLength * 0.72, 1, tree.depth)
     growBranch(trunk.x2, trunk.y2, -Math.PI / 2 + lean, trunkLength * 0.6, 2, tree.depth)
@@ -133,20 +144,16 @@ function buildScene(width: number, height: number, unit: number): Scene {
   }
 
   const pods: Pod[] = []
-  for (const tree of TREES) {
-    const own = anchors.filter((a) => a.depth === tree.depth && Math.abs(a.x - tree.x * width) < treeScale * 2.2)
-    const picks = own.sort(() => random() - 0.5).slice(0, tree.depth === 1 ? 5 : 4)
-    for (const anchor of picks) {
-      pods.push({
-        x: anchor.x,
-        y: anchor.y,
-        angle: (random() - 0.5) * 0.4,
-        size: 0.8 + random() * 0.4,
-        depth: tree.depth,
-        phase: random() * Math.PI * 2,
-        speed: 0.0006 + random() * 0.0006,
-      })
-    }
+  for (const anchor of anchors) {
+    if (!anchor.onTrunk && random() < 0.35) continue
+    const trunkSide: 1 | -1 = random() < 0.5 ? -1 : 1
+    pods.push({
+      x: anchor.x,
+      y: anchor.y,
+      side: anchor.onTrunk ? trunkSide : anchor.x < width * TREES[anchor.tree].x ? -1 : 1,
+      size: (anchor.onTrunk ? 0.95 : 0.8) + random() * 0.25,
+      depth: anchor.depth,
+    })
   }
 
   return { segments, leaves, pods, groundY }
@@ -243,49 +250,54 @@ export function CacaoCanopyCanvas({ className }: { className?: string }) {
     let scene: Scene = { segments: [], leaves: [], pods: [], groundY: 0 }
     let staticLayer: HTMLCanvasElement | null = null
 
-    const drawPod = (pod: Pod, time: number) => {
-      const breath = reducedMotion ? 0.5 : (Math.sin(time * pod.speed + pod.phase) + 1) / 2
-      const alpha = LAYER_ALPHA[pod.depth]
-      const length = (pod.depth === 1 ? 15 : 12) * pod.size * unit * (1 + breath * 0.08)
-      const girth = length * 0.42
-      const stem = 5 * unit
-      const cx = pod.x + Math.sin(pod.angle) * (stem + length)
-      const cy = pod.y + Math.cos(pod.angle) * (stem + length)
-
-      const halo = length * (1.6 + breath * 1)
-      ctx.globalAlpha = alpha * (0.35 + breath * 0.45)
-      ctx.drawImage(glow, cx - halo, cy - halo, halo * 2, halo * 2)
-      ctx.globalAlpha = 1
-
-      ctx.save()
-      ctx.translate(pod.x, pod.y)
-      ctx.rotate(-pod.angle)
-
+    const tracePod = (length: number, girth: number) => {
       ctx.beginPath()
       ctx.moveTo(0, 0)
-      ctx.lineTo(0, stem)
-      ctx.strokeStyle = `rgba(${GOLD},${alpha * 0.8})`
-      ctx.lineWidth = 1.5
-      ctx.stroke()
-
-      ctx.translate(0, stem + length)
-      ctx.beginPath()
-      ctx.moveTo(0, -length)
-      ctx.bezierCurveTo(girth * 1.3, -length * 0.55, girth * 1.3, length * 0.55, 0, length)
-      ctx.bezierCurveTo(-girth * 1.3, length * 0.55, -girth * 1.3, -length * 0.55, 0, -length)
+      ctx.bezierCurveTo(girth * 1.35, length * 0.2, girth * 1.2, length * 0.85, 0, length * 2)
+      ctx.bezierCurveTo(-girth * 1.2, length * 0.85, -girth * 1.35, length * 0.2, 0, 0)
       ctx.closePath()
-      ctx.strokeStyle = `rgba(${GOLD},${alpha * 0.16})`
-      ctx.lineWidth = 5
+    }
+
+    const drawPod = (pod: Pod, breath: number) => {
+      const alpha = LAYER_ALPHA[pod.depth]
+      const scale = 1 + breath * 0.08
+      const length = (pod.depth === 1 ? 11 : 9) * pod.size * unit
+      const girth = length * 0.42
+      const offset = girth * 0.9
+
+      ctx.save()
+      ctx.translate(pod.x + pod.side * offset, pod.y)
+      ctx.rotate(-pod.side * 0.22)
+      ctx.scale(scale, scale)
+
+      const halo = length * (2.2 + breath * 0.6)
+      ctx.globalAlpha = alpha * (0.25 + breath * 0.35)
+      ctx.drawImage(glow, -halo, length - halo, halo * 2, halo * 2)
+      ctx.globalAlpha = 1
+
+      const gradient = ctx.createLinearGradient(0, 0, 0, length * 2)
+      const intensity = alpha * (0.75 + breath * 0.25)
+      gradient.addColorStop(0, `rgba(${POD_TOP},${intensity})`)
+      gradient.addColorStop(1, `rgba(${POD_BOTTOM},${intensity})`)
+
+      tracePod(length, girth)
+      ctx.strokeStyle = gradient
+      ctx.lineWidth = 1.75 / scale
+      ctx.shadowColor = `rgba(${POD_HALO_OUTER},${alpha * (0.5 + breath * 0.5)})`
+      ctx.shadowBlur = 16
       ctx.stroke()
-      ctx.strokeStyle = `rgba(${GOLD},${alpha * (0.7 + breath * 0.3)})`
-      ctx.lineWidth = 1.75
+      ctx.shadowColor = `rgba(${POD_HALO_INNER},${alpha * (0.6 + breath * 0.4)})`
+      ctx.shadowBlur = 8
       ctx.stroke()
+      ctx.shadowBlur = 0
 
       ctx.beginPath()
-      ctx.moveTo(0, -length * 0.8)
-      ctx.lineTo(0, length * 0.8)
-      ctx.strokeStyle = `rgba(${AMBER},${alpha * 0.55})`
-      ctx.lineWidth = 1
+      for (const ridge of [-0.45, 0, 0.45]) {
+        ctx.moveTo(girth * ridge * 0.6, length * 0.35)
+        ctx.quadraticCurveTo(girth * ridge * 1.3, length, girth * ridge * 0.5, length * 1.7)
+      }
+      ctx.strokeStyle = `rgba(${POD_TOP},${alpha * (0.3 + breath * 0.25)})`
+      ctx.lineWidth = 1 / scale
       ctx.stroke()
       ctx.restore()
     }
@@ -296,8 +308,9 @@ export function CacaoCanopyCanvas({ className }: { className?: string }) {
       if (staticLayer) ctx.drawImage(staticLayer, 0, 0)
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
       ctx.lineCap = 'round'
+      const breath = reducedMotion ? 0.5 : (Math.sin((time / BREATH_PERIOD_MS) * Math.PI * 2) + 1) / 2
       for (const depth of [0, 1] as const) {
-        for (const pod of scene.pods) if (pod.depth === depth) drawPod(pod, time)
+        for (const pod of scene.pods) if (pod.depth === depth) drawPod(pod, breath)
       }
     }
 
