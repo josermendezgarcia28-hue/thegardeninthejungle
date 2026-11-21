@@ -70,7 +70,7 @@ export function CacaoSafety({ featured }: { featured: Product[] }) {
   return (
     <section
       aria-labelledby="cacao-safety-heading"
-      className="relative isolate overflow-hidden border-t border-neon-emerald/15 bg-neon-void text-fungi-ink"
+      className="relative isolate overflow-hidden border-t border-neon-emerald/15 bg-fungi-void text-fungi-ink"
     >
       <CacaoCanopyCanvas className="-z-20 opacity-90 md:opacity-100" />
       <div
