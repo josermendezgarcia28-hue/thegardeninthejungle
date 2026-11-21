@@ -41,8 +41,8 @@ export const products: Product[] = [
         caption: 'Theobroma Cacao — Ripe pods growing on the tree trunk',
       },
       {
-        src: 'https://upload.wikimedia.org/wikipedia/commons/d/d1/Cacao_Beans_Drying.JPG',
-        caption: 'Traditional sun-drying and fermentation of harvested beans',
+        src: 'https://www.mayamooncacao.com/cdn/shop/files/sacred-heart-ceremonial-cacao-ritual-kit-valentines-day-love.jpg?v=1785970723&width=800',
+        caption: 'Sacred Heart Ceremonial Cacao Ritual Kit',
       },
       {
         src: 'https://upload.wikimedia.org/wikipedia/commons/e/e4/Cocoa_bean_roasted2.jpg',
