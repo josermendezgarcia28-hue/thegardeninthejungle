@@ -53,8 +53,8 @@ export const products: Product[] = [
         caption: 'Mayan Organic Ceremonial Cacao (1 Lb Fresh Ground)',
       },
       {
-        src: 'https://www.mayamooncacao.com/cdn/shop/files/Mayan_organic_ceremonial_Cacao_Powder_0.5_Lb_Fresh_Ground_-_Maya_Moon_Cacao-2576943.png?v=1785969169&width=800',
-        caption: 'Mayan Organic Ceremonial Cacao (0.5 Lb Fresh Ground)',
+        src: 'https://www.mayamooncacao.com/cdn/shop/files/maya-moon-cacao-ceremonial-grade-top-view-wooden-table-cacao-block.jpg?v=1785970414&width=800',
+        caption: 'Mayan Organic Ceremonial Cacao (1 Lb Pure Block)',
       },
       {
         src: 'https://www.mayamooncacao.com/cdn/shop/files/mood-enhancing-cacao-nibs-snack-ritual-use-guatemala.png?v=1785970485&width=800',
