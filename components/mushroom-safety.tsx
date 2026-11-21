@@ -1,10 +1,13 @@
 import { FlaskConical, Scale, ScrollText, ShieldCheck } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { MyceliumCanvas } from '@/components/mycelium-canvas'
 
 type Pillar = {
   tag: string
   title: string
+  metric: string
+  metricLabel: string
   body: string
   points: string[]
   icon: LucideIcon
@@ -15,6 +18,8 @@ const pillars: Pillar[] = [
   {
     tag: 'Historical safety',
     title: 'Millennia of documented use',
+    metric: '2,000+ yrs',
+    metricLabel: 'of recorded traditional use',
     body: 'Reishi, cordyceps, lion’s mane and their kin have been prepared continuously for thousands of years in Traditional Chinese Medicine and Indigenous wellness traditions, with a remarkably clean record of tolerance.',
     points: [
       'Recorded in classical herbal texts as superior, daily-use tonics',
@@ -26,6 +31,8 @@ const pillars: Pillar[] = [
   {
     tag: 'Modern efficacy',
     title: 'Clinical extraction standards',
+    metric: 'β-glucans',
+    metricLabel: 'verified as the potency benchmark',
     body: 'Today’s research measures what tradition observed. Verified beta-glucan potency is the benchmark, and hot-water extraction breaks down tough chitin cell walls to release bioavailable polysaccharides.',
     points: [
       'Beta-glucan content verified, not just total polysaccharides',
@@ -37,6 +44,8 @@ const pillars: Pillar[] = [
   {
     tag: 'Adaptogenic balance',
     title: 'Modulate, never overstimulate',
+    metric: 'Bidirectional',
+    metricLabel: 'support that returns systems to balance',
     body: 'Functional mushrooms act as adaptogens: they help the immune and nervous systems return to balance rather than pushing them in one direction, which is what makes gentle daily supplementation possible.',
     points: [
       'Supports a calm, responsive immune system',
@@ -48,6 +57,8 @@ const pillars: Pillar[] = [
   {
     tag: 'Quality standard',
     title: 'What to look for in an extract',
+    metric: '100%',
+    metricLabel: 'whole fruiting bodies, nothing else',
     body: 'Not every mushroom product is the real thing. Many are mostly myceliated grain. Hold any extract you choose to three non-negotiables.',
     points: [
       '100% whole fruiting bodies',
@@ -63,11 +74,17 @@ export function MushroomSafety() {
   return (
     <section
       aria-labelledby="mushroom-safety-heading"
-      className="bg-fungi-paper text-fungi-forest"
+      className="relative isolate overflow-hidden bg-fungi-void text-fungi-ink"
     >
+      <MyceliumCanvas className="-z-20 opacity-50 md:opacity-90" />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,var(--color-fungi-void)_10%,transparent_75%)] opacity-80"
+      />
+
       <div className="mx-auto flex max-w-6xl flex-col gap-12 px-5 py-20 md:py-24">
         <header className="flex max-w-2xl flex-col gap-4">
-          <span className="w-fit rounded-full border border-fungi-ember px-3 py-1 font-label text-xs uppercase tracking-[0.22em] text-fungi-ember">
+          <span className="w-fit rounded-full border border-fungi-glow/60 px-3 py-1 font-label text-xs uppercase tracking-[0.22em] text-fungi-ink shadow-[0_0_18px_-4px_var(--color-fungi-glow)]">
             Functional mushrooms
           </span>
           <h2
@@ -76,7 +93,7 @@ export function MushroomSafety() {
           >
             The safety and efficacy of functional mushrooms
           </h2>
-          <p className="leading-relaxed text-fungi-soil text-pretty">
+          <p className="leading-relaxed text-fungi-ink/85 text-pretty">
             Ancient tradition and modern lab science arrive at the same place.
             Here is why these fungi have earned their place in a daily ritual,
             and how to tell a genuine extract from a filler-heavy imitation.
@@ -87,31 +104,49 @@ export function MushroomSafety() {
           {pillars.map((pillar) => (
             <li
               key={pillar.tag}
-              className={cn(
-                'flex flex-col gap-5 rounded-2xl border-t-4 border-fungi-ember p-7 text-fungi-ink md:p-8',
-                pillar.tone === 'forest' ? 'bg-fungi-forest' : 'bg-fungi-soil',
-              )}
+              className="flex flex-col gap-5 rounded-2xl border border-fungi-ink/15 bg-fungi-void/80 p-7 text-fungi-ink md:bg-fungi-void/55 md:p-8 md:backdrop-blur-md"
             >
               <div className="flex items-center justify-between gap-4">
-                <span className="rounded-full bg-fungi-ember px-3 py-1 font-label text-xs uppercase tracking-[0.18em] text-fungi-ink">
+                <span
+                  className={cn(
+                    'rounded-full px-3 py-1 font-label text-xs uppercase tracking-[0.18em] text-fungi-ink',
+                    pillar.tone === 'forest' ? 'bg-fungi-forest' : 'bg-fungi-soil',
+                  )}
+                >
                   {pillar.tag}
                 </span>
-                <pillar.icon
-                  className="size-6 text-fungi-ink/80"
-                  aria-hidden="true"
-                />
+                <span
+                  className={cn(
+                    'flex size-10 items-center justify-center rounded-full ring-1 ring-fungi-ink/15',
+                    pillar.tone === 'forest' ? 'bg-fungi-forest' : 'bg-fungi-soil',
+                  )}
+                >
+                  <pillar.icon className="size-5 text-fungi-ink" aria-hidden="true" />
+                </span>
               </div>
+
               <h3 className="font-serif text-2xl leading-snug text-balance">
                 {pillar.title}
               </h3>
+
+              <p className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                <span className="font-serif text-3xl text-fungi-glow [text-shadow:0_0_22px_var(--color-fungi-glow)]">
+                  {pillar.metric}
+                </span>
+                <span className="text-sm leading-relaxed text-fungi-ink/75">
+                  {pillar.metricLabel}
+                </span>
+              </p>
+
               <p className="leading-relaxed text-fungi-ink/85 text-pretty">
                 {pillar.body}
               </p>
+
               <ul className="mt-auto flex flex-col gap-2.5 border-t border-fungi-ink/15 pt-5">
                 {pillar.points.map((point) => (
                   <li key={point} className="flex gap-3 leading-relaxed">
                     <span
-                      className="mt-[0.55em] size-1.5 shrink-0 rotate-45 bg-fungi-ember ring-1 ring-fungi-ink/60"
+                      className="mt-[0.55em] size-1.5 shrink-0 rotate-45 bg-fungi-glow shadow-[0_0_8px_var(--color-fungi-glow)]"
                       aria-hidden="true"
                     />
                     <span>{point}</span>
@@ -122,7 +157,7 @@ export function MushroomSafety() {
           ))}
         </ul>
 
-        <p className="text-sm leading-relaxed text-fungi-soil/80">
+        <p className="text-sm leading-relaxed text-fungi-ink/70">
           Educational information only, not medical advice. Speak with a
           qualified practitioner before starting any supplement, especially if
           you are pregnant, nursing or taking medication.

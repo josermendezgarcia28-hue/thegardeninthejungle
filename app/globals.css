@@ -45,6 +45,8 @@
   --color-fungi-soil: oklch(0.32 0.045 55);
   --color-fungi-ember: oklch(0.52 0.17 30);
   --color-fungi-ink: oklch(0.985 0.004 95);
+  --color-fungi-void: oklch(0.08 0 0);
+  --color-fungi-glow: oklch(0.68 0.19 32);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
