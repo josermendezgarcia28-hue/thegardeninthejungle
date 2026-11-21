@@ -4,6 +4,19 @@ import { useEffect, useRef } from 'react'
 import { cn } from '@/lib/utils'
 
 type Depth = 0 | 1
+type Kind = 'trunk' | 'branch' | 'root' | 'rootlet'
+type Segment = {
+  x1: number
+  y1: number
+  cx: number
+  cy: number
+  x2: number
+  y2: number
+  width: number
+  kind: Kind
+  depth: Depth
+}
+type Leaf = { x: number; y: number; angle: number; size: number; depth: Depth }
 type Pod = {
   x: number
   y: number
@@ -12,17 +25,19 @@ type Pod = {
   depth: Depth
   phase: number
   speed: number
-  driftPhase: number
 }
-type Link = { from: number; to: number; bend: number }
+type Scene = { segments: Segment[]; leaves: Leaf[]; pods: Pod[]; groundY: number }
 
 const MAX_DPR = 1.5
-const POD_COUNT = 16
 const EMERALD = '0,255,136'
 const GOLD = '255,215,0'
 const AMBER = '255,170,0'
 const LAYER_ALPHA: Record<Depth, number> = { 0: 0.3, 1: 0.8 }
-const LAYER_WIDTH: Record<Depth, number> = { 0: 1.5, 1: 2 }
+const TREES: { x: number; depth: Depth; scale: number }[] = [
+  { x: 0.16, depth: 1, scale: 1 },
+  { x: 0.52, depth: 0, scale: 1.15 },
+  { x: 0.86, depth: 1, scale: 0.92 },
+]
 
 function createRandom(seed: number) {
   let state = seed
@@ -32,42 +47,109 @@ function createRandom(seed: number) {
   }
 }
 
-function seedConstellation() {
-  const random = createRandom(7741)
-  const cols = 4
-  const rows = Math.ceil(POD_COUNT / cols)
-  const pods: Pod[] = Array.from({ length: POD_COUNT }, (_, i) => {
-    const col = i % cols
-    const row = Math.floor(i / cols)
-    return {
-      x: (col + 0.2 + random() * 0.6) / cols,
-      y: (row + 0.2 + random() * 0.6) / rows,
-      angle: (random() - 0.5) * 1.4,
-      size: 0.8 + random() * 0.5,
-      depth: random() < 0.55 ? 1 : 0,
-      phase: random() * Math.PI * 2,
-      speed: 0.0006 + random() * 0.0006,
-      driftPhase: random() * Math.PI * 2,
-    }
-  })
+function buildScene(width: number, height: number, unit: number): Scene {
+  const random = createRandom(4219)
+  const segments: Segment[] = []
+  const leaves: Leaf[] = []
+  const anchors: { x: number; y: number; depth: Depth }[] = []
+  const groundY = height * 0.62
+  const treeScale = Math.max(60, Math.min(width * 0.18, height * 0.17))
 
-  const links: Link[] = []
-  const seen = new Set<string>()
-  pods.forEach((pod, i) => {
-    const nearest = pods
-      .map((other, j) => ({ j, d: Math.hypot(other.x - pod.x, other.y - pod.y) }))
-      .filter(({ j }) => j !== i)
-      .sort((a, b) => a.d - b.d)
-      .slice(0, 2)
-    for (const { j } of nearest) {
-      const key = i < j ? `${i}-${j}` : `${j}-${i}`
-      if (seen.has(key)) continue
-      seen.add(key)
-      links.push({ from: i, to: j, bend: (random() - 0.5) * 0.5 })
-    }
-  })
+  const pushSegment = (
+    x: number,
+    y: number,
+    angle: number,
+    length: number,
+    lineWidth: number,
+    kind: Kind,
+    depth: Depth,
+  ) => {
+    const x2 = x + Math.cos(angle) * length
+    const y2 = y + Math.sin(angle) * length
+    const bend = (random() - 0.5) * length * 0.3
+    const cx = (x + x2) / 2 - Math.sin(angle) * bend
+    const cy = (y + y2) / 2 + Math.cos(angle) * bend
+    segments.push({ x1: x, y1: y, cx, cy, x2, y2, width: lineWidth, kind, depth })
+    return { x2, y2, cx, cy }
+  }
 
-  return { pods, links }
+  const growBranch = (x: number, y: number, angle: number, length: number, level: number, depth: Depth) => {
+    const lineWidth = Math.max(1.5, 2 - level * 0.12)
+    const { x2, y2, cx, cy } = pushSegment(x, y, angle, length, lineWidth, 'branch', depth)
+    if (level >= 1 && level <= 3) anchors.push({ x: cx, y: cy, depth })
+    if (level >= 4) {
+      const leafCount = 2 + Math.floor(random() * 2)
+      for (let i = 0; i < leafCount; i++) {
+        leaves.push({
+          x: x2,
+          y: y2,
+          angle: angle + (random() - 0.5) * 1.8,
+          size: (9 + random() * 6) * unit,
+          depth,
+        })
+      }
+      return
+    }
+    const children = random() < 0.35 ? 3 : 2
+    for (let i = 0; i < children; i++) {
+      const spread = children === 3 ? (i - 1) * 0.55 : (i === 0 ? -0.45 : 0.45)
+      growBranch(x2, y2, angle + spread + (random() - 0.5) * 0.3, length * (0.68 + random() * 0.1), level + 1, depth)
+    }
+  }
+
+  const growRoot = (x: number, y: number, angle: number, length: number, level: number, depth: Depth) => {
+    const kind: Kind = level >= 2 ? 'rootlet' : 'root'
+    const lineWidth = Math.max(1.5, 2 - level * 0.15)
+    const { x2, y2 } = pushSegment(x, y, angle, length, lineWidth, kind, depth)
+    if (level >= 4 || y2 > height * 0.99) return
+    const children = random() < 0.5 ? 3 : 2
+    for (let i = 0; i < children; i++) {
+      const outward = angle < Math.PI / 2 ? -0.15 : 0.15
+      let next = angle + (i - (children - 1) / 2) * 0.6 + outward + (random() - 0.5) * 0.3
+      next = Math.min(Math.PI - 0.12, Math.max(0.12, next))
+      growRoot(x2, y2, next, length * (0.66 + random() * 0.12), level + 1, depth)
+    }
+  }
+
+  for (const tree of TREES) {
+    const baseX = tree.x * width
+    const trunkLength = treeScale * tree.scale
+    const lean = (random() - 0.5) * 0.12
+    const trunk = pushSegment(baseX, groundY, -Math.PI / 2 + lean, trunkLength, 2, 'trunk', tree.depth)
+    anchors.push({ x: trunk.cx, y: trunk.cy, depth: tree.depth })
+    anchors.push({
+      x: (trunk.cx + trunk.x2) / 2,
+      y: (trunk.cy + trunk.y2) / 2,
+      depth: tree.depth,
+    })
+    growBranch(trunk.x2, trunk.y2, -Math.PI / 2 - 0.5 + lean, trunkLength * 0.72, 1, tree.depth)
+    growBranch(trunk.x2, trunk.y2, -Math.PI / 2 + 0.5 + lean, trunkLength * 0.72, 1, tree.depth)
+    growBranch(trunk.x2, trunk.y2, -Math.PI / 2 + lean, trunkLength * 0.6, 2, tree.depth)
+
+    const rootLength = Math.min((height - groundY) * 0.32, trunkLength * 1.3)
+    for (const angle of [0.25, 0.75, Math.PI / 2, Math.PI - 0.75, Math.PI - 0.25]) {
+      growRoot(baseX, groundY, angle + (random() - 0.5) * 0.15, rootLength * (0.8 + random() * 0.3), 0, tree.depth)
+    }
+  }
+
+  const pods: Pod[] = []
+  for (const tree of TREES) {
+    const own = anchors.filter((a) => a.depth === tree.depth && Math.abs(a.x - tree.x * width) < treeScale * 2.2)
+    const picks = own.sort(() => random() - 0.5).slice(0, tree.depth === 1 ? 5 : 4)
+    for (const anchor of picks) {
+      pods.push({
+        x: anchor.x,
+        y: anchor.y,
+        angle: (random() - 0.5) * 0.4,
+        size: 0.8 + random() * 0.4,
+        depth: tree.depth,
+        phase: random() * Math.PI * 2,
+        speed: 0.0006 + random() * 0.0006,
+      })
+    }
+  }
+
+  return { segments, leaves, pods, groundY }
 }
 
 function createGlowSprite() {
@@ -87,6 +169,60 @@ function createGlowSprite() {
   return sprite
 }
 
+function neonStroke(ctx: CanvasRenderingContext2D, rgb: string, alpha: number, lineWidth: number) {
+  ctx.shadowColor = `rgba(${rgb},${alpha})`
+  ctx.shadowBlur = 8
+  ctx.strokeStyle = `rgba(${rgb},${alpha})`
+  ctx.lineWidth = lineWidth
+  ctx.stroke()
+  ctx.shadowBlur = 0
+}
+
+function renderStaticLayer(scene: Scene, width: number, height: number, dpr: number) {
+  const layer = document.createElement('canvas')
+  layer.width = Math.round(width * dpr)
+  layer.height = Math.round(height * dpr)
+  const ctx = layer.getContext('2d')
+  if (!ctx) return layer
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+  ctx.lineCap = 'round'
+  ctx.lineJoin = 'round'
+
+  ctx.beginPath()
+  ctx.setLineDash([2, 10])
+  ctx.moveTo(0, scene.groundY)
+  ctx.lineTo(width, scene.groundY)
+  neonStroke(ctx, EMERALD, 0.25, 1.5)
+  ctx.setLineDash([])
+
+  for (const depth of [0, 1] as const) {
+    const alpha = LAYER_ALPHA[depth]
+    for (const s of scene.segments) {
+      if (s.depth !== depth) continue
+      ctx.beginPath()
+      ctx.moveTo(s.x1, s.y1)
+      ctx.quadraticCurveTo(s.cx, s.cy, s.x2, s.y2)
+      const isGold = s.kind === 'trunk' || s.kind === 'root'
+      const strength = s.kind === 'rootlet' ? 0.75 : 1
+      neonStroke(ctx, isGold ? GOLD : EMERALD, alpha * strength, s.width)
+    }
+    for (const leaf of scene.leaves) {
+      if (leaf.depth !== depth) continue
+      ctx.save()
+      ctx.translate(leaf.x, leaf.y)
+      ctx.rotate(leaf.angle)
+      const l = leaf.size
+      ctx.beginPath()
+      ctx.moveTo(0, 0)
+      ctx.quadraticCurveTo(l * 0.5, -l * 0.32, l, 0)
+      ctx.quadraticCurveTo(l * 0.5, l * 0.32, 0, 0)
+      neonStroke(ctx, EMERALD, alpha * 0.85, 1.5)
+      ctx.restore()
+    }
+  }
+  return layer
+}
+
 export function CacaoCanopyCanvas({ className }: { className?: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
@@ -95,7 +231,6 @@ export function CacaoCanopyCanvas({ className }: { className?: string }) {
     const ctx = canvas?.getContext('2d')
     if (!canvas || !ctx) return
 
-    const { pods, links } = seedConstellation()
     const glow = createGlowSprite()
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
@@ -105,93 +240,64 @@ export function CacaoCanopyCanvas({ className }: { className?: string }) {
     let unit = 1
     let frame = 0
     let visible = true
-
-    const position = (pod: Pod, time: number) => {
-      const t = reducedMotion ? 0 : time * 0.00018
-      return {
-        x: pod.x * width + Math.sin(t + pod.driftPhase) * 10 * unit,
-        y: pod.y * height + Math.cos(t * 0.8 + pod.driftPhase) * 8 * unit,
-      }
-    }
-
-    const glowStroke = (rgb: string, alpha: number, lineWidth: number) => {
-      ctx.strokeStyle = `rgba(${rgb},${alpha * 0.16})`
-      ctx.lineWidth = lineWidth * 3.5
-      ctx.stroke()
-      ctx.strokeStyle = `rgba(${rgb},${alpha})`
-      ctx.lineWidth = lineWidth
-      ctx.stroke()
-    }
-
-    const drawLinks = (depth: Depth, time: number) => {
-      const alpha = LAYER_ALPHA[depth] * 0.55
-      for (const link of links) {
-        const a = pods[link.from]
-        const b = pods[link.to]
-        if (Math.max(a.depth, b.depth) !== depth) continue
-        const pa = position(a, time)
-        const pb = position(b, time)
-        const mx = (pa.x + pb.x) / 2 - (pb.y - pa.y) * link.bend
-        const my = (pa.y + pb.y) / 2 + (pb.x - pa.x) * link.bend
-        ctx.beginPath()
-        ctx.moveTo(pa.x, pa.y)
-        ctx.quadraticCurveTo(mx, my, pb.x, pb.y)
-        glowStroke(EMERALD, alpha, LAYER_WIDTH[depth] * 0.75)
-      }
-    }
+    let scene: Scene = { segments: [], leaves: [], pods: [], groundY: 0 }
+    let staticLayer: HTMLCanvasElement | null = null
 
     const drawPod = (pod: Pod, time: number) => {
-      const { x, y } = position(pod, time)
       const breath = reducedMotion ? 0.5 : (Math.sin(time * pod.speed + pod.phase) + 1) / 2
       const alpha = LAYER_ALPHA[pod.depth]
-      const line = LAYER_WIDTH[pod.depth]
-      const length = (pod.depth === 1 ? 34 : 24) * pod.size * unit * (1 + breath * 0.06)
+      const length = (pod.depth === 1 ? 15 : 12) * pod.size * unit * (1 + breath * 0.08)
       const girth = length * 0.42
+      const stem = 5 * unit
+      const cx = pod.x + Math.sin(pod.angle) * (stem + length)
+      const cy = pod.y + Math.cos(pod.angle) * (stem + length)
 
-      const halo = length * (1.4 + breath * 0.9)
+      const halo = length * (1.6 + breath * 1)
       ctx.globalAlpha = alpha * (0.35 + breath * 0.45)
-      ctx.drawImage(glow, x - halo, y - halo, halo * 2, halo * 2)
+      ctx.drawImage(glow, cx - halo, cy - halo, halo * 2, halo * 2)
       ctx.globalAlpha = 1
 
       ctx.save()
-      ctx.translate(x, y)
-      ctx.rotate(pod.angle)
+      ctx.translate(pod.x, pod.y)
+      ctx.rotate(-pod.angle)
 
+      ctx.beginPath()
+      ctx.moveTo(0, 0)
+      ctx.lineTo(0, stem)
+      ctx.strokeStyle = `rgba(${GOLD},${alpha * 0.8})`
+      ctx.lineWidth = 1.5
+      ctx.stroke()
+
+      ctx.translate(0, stem + length)
       ctx.beginPath()
       ctx.moveTo(0, -length)
       ctx.bezierCurveTo(girth * 1.3, -length * 0.55, girth * 1.3, length * 0.55, 0, length)
       ctx.bezierCurveTo(-girth * 1.3, length * 0.55, -girth * 1.3, -length * 0.55, 0, -length)
       ctx.closePath()
-      ctx.fillStyle = 'rgba(0,0,0,0.85)'
-      ctx.fill()
-      glowStroke(GOLD, alpha * (0.7 + breath * 0.3), line)
+      ctx.strokeStyle = `rgba(${GOLD},${alpha * 0.16})`
+      ctx.lineWidth = 5
+      ctx.stroke()
+      ctx.strokeStyle = `rgba(${GOLD},${alpha * (0.7 + breath * 0.3)})`
+      ctx.lineWidth = 1.75
+      ctx.stroke()
 
-      for (const offset of [-0.45, 0, 0.45]) {
-        ctx.beginPath()
-        ctx.moveTo(0, -length * 0.82)
-        ctx.quadraticCurveTo(girth * offset * 1.6, 0, 0, length * 0.82)
-        ctx.strokeStyle = `rgba(${EMERALD},${alpha * 0.55})`
-        ctx.lineWidth = line * 0.5
-        ctx.stroke()
-      }
-
-      ctx.restore()
-
-      const core = (2.2 + breath * 1.6) * unit * (pod.depth === 1 ? 1 : 0.7)
       ctx.beginPath()
-      ctx.arc(x, y, core, 0, Math.PI * 2)
-      ctx.fillStyle = `rgba(255,240,180,${alpha * (0.7 + breath * 0.3)})`
-      ctx.fill()
+      ctx.moveTo(0, -length * 0.8)
+      ctx.lineTo(0, length * 0.8)
+      ctx.strokeStyle = `rgba(${AMBER},${alpha * 0.55})`
+      ctx.lineWidth = 1
+      ctx.stroke()
+      ctx.restore()
     }
 
     const draw = (time: number) => {
+      ctx.setTransform(1, 0, 0, 1, 0, 0)
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      if (staticLayer) ctx.drawImage(staticLayer, 0, 0)
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-      ctx.clearRect(0, 0, width, height)
       ctx.lineCap = 'round'
-      ctx.lineJoin = 'round'
       for (const depth of [0, 1] as const) {
-        drawLinks(depth, time)
-        for (const pod of pods) if (pod.depth === depth) drawPod(pod, time)
+        for (const pod of scene.pods) if (pod.depth === depth) drawPod(pod, time)
       }
     }
 
@@ -200,9 +306,11 @@ export function CacaoCanopyCanvas({ className }: { className?: string }) {
       dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR)
       width = rect.width
       height = rect.height
-      unit = Math.max(0.7, Math.min(1.2, width / 1000))
+      unit = Math.max(0.75, Math.min(1.2, width / 1000))
       canvas.width = Math.round(width * dpr)
       canvas.height = Math.round(height * dpr)
+      scene = buildScene(width, height, unit)
+      staticLayer = renderStaticLayer(scene, width, height, dpr)
     }
 
     const loop = (time: number) => {
