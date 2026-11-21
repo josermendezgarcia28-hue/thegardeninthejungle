@@ -1,6 +1,6 @@
 import { Atom, BatteryCharging, Mountain, ShieldCheck } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
-import { MineralVeinCanvas } from '@/components/mineral-vein-canvas'
+import { MountainRidgeCanvas } from '@/components/mountain-ridge-canvas'
 
 type Pillar = {
   tag: string
@@ -70,7 +70,7 @@ export function ShilajitSafety() {
       aria-labelledby="shilajit-safety-heading"
       className="relative isolate overflow-hidden border-t border-fungi-ink/10 bg-fungi-void text-fungi-ink"
     >
-      <MineralVeinCanvas className="-z-20 opacity-45 md:opacity-85" />
+      <MountainRidgeCanvas className="-z-20 opacity-55 md:opacity-90" />
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,var(--color-fungi-void)_10%,transparent_75%)] opacity-80"
