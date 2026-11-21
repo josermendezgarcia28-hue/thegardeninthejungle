@@ -134,9 +134,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      <MushroomSafety />
+<ShilajitSafety />
 
-      <ShilajitSafety />
+<MushroomSafety />
 
       {/* CTA */}
       <ExperienceCta />
