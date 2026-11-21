@@ -37,9 +37,9 @@ export default function HomePage() {
             />
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-foreground/85 text-pretty">
               A place where plants and people come together. Scavenge through
-              natural substances suitable for human health — brought to you by trusted
-              affiliates — and awaken your genetic superpowers by tapping back
-              into your roots.
+              natural substances suitable for human health and awaken your
+              genetic superpowers by tapping back into your roots — brought to
+              you by trusted affiliates.
             </p>
             <div className="mt-9 flex flex-wrap gap-4">
               <Link
